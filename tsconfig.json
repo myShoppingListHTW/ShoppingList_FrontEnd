@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
   },
   "files": [],
   "references": [
