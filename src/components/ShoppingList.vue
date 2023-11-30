@@ -49,23 +49,32 @@
       </tr>
       </tbody>
     </table>
-
-
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ShoppingList',
+  name: 'items',
   data() {
     return {
       newItem: '',
-      items: [
-        { name: 'banana', status: true }, // 'true' represents 'not-Empty'
-        { name: 'apple', status: false } // 'false' represents 'Empty'
-      ],
-      editedItem: null
+      items: [],
+      editedItem: null,
     };
+  },
+  mounted() {
+    const endpoint= 'http://localhost:8080/api/v1/article';
+    const requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+
+    fetch(endpoint, requestOptions)
+      .then(response => response.json())
+      .then(result => result.forEach(item => {
+        this.items.push(item);
+      }))
+      .catch(error => console.log('error', error));
   },
 
   methods: {
@@ -78,7 +87,7 @@ export default {
       } else {
         this.items.push({
           name: this.newItem.trim(),
-          status: false // Initial status is set to 'Empty'
+          status: false, // Initial status is set to 'Empty'
         });
       }
 
@@ -97,12 +106,10 @@ export default {
     changeStatus(index) {
       // Toggle the status of the item at the given index
       this.items[index].status = !this.items[index].status;
-    }
-    // ... (other methods)
-  }
+    },
+  },
 };
 </script>
-
 
 <style scoped>
 .container {
