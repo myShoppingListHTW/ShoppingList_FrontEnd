@@ -5,11 +5,11 @@
     <!-- Input -->
     <div class="d-flex justify-content-center align-items-center mb-3">
       <input
-          type="text"
-          class="form-control"
-          v-model="newItem"
-          placeholder="Add new item"
-          @keyup.enter="submitItem"
+        type="text"
+        class="form-control"
+        v-model="newItem"
+        placeholder="Add new item"
+        @keyup.enter="submitItem"
       />
       <button @click="submitItem" class="btn btn-success rounded-0 ml-2">Add</button>
     </div>
@@ -19,6 +19,7 @@
       <thead>
       <tr>
         <th scope="col">Item</th>
+        <th scope="col">Status</th> <!-- New column for status -->
         <th scope="col" class="text-center">Actions</th>
         <th scope="col" class="text-center"></th>
       </tr>
@@ -28,12 +29,17 @@
         <td>
           <div class="d-flex align-items-center">
             <input
-                type="checkbox"
-                :checked="item.status"
-                @change="changeStatus(index)"
-                class="mr-2"
+              type="checkbox"
+              :checked="item.status"
+              @change="toggleStatus(index)"
+              class="mr-2"
             />
             <span :class="{ 'line-through': item.status }">{{ item.name }}</span>
+          </div>
+        </td>
+        <td>
+          <div class="d-flex align-items-center">
+            {{ item.status ? 'Not Empty' : 'Empty' }}
           </div>
         </td>
         <td>
@@ -63,35 +69,94 @@ export default {
     };
   },
   mounted() {
-    const endpoint= 'http://localhost:8080/api/v1/article';
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
-
-    fetch(endpoint, requestOptions)
-      .then(response => response.json())
-      .then(result => result.forEach(item => {
-        this.items.push(item);
-      }))
-      .catch(error => console.log('error', error));
+    this.fetchItems();
   },
 
   methods: {
+    fetchItems() {
+      const endpoint = 'http://localhost:8080/api/v1/article';
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+
+      fetch(endpoint, requestOptions)
+        .then(response => response.json())
+        .then(result => (this.items = result))
+        .catch(error => console.log('error', error));
+    },
+
     submitItem() {
       if (this.newItem.trim() === '') return;
 
       if (this.editedItem !== null) {
-        this.items[this.editedItem].name = this.newItem.trim();
-        this.editedItem = null;
+        this.updateItem();
       } else {
-        this.items.push({
-          name: this.newItem.trim(),
-          status: false, // Initial status is set to 'Empty'
-        });
+        this.addItem();
       }
+    },
 
-      this.newItem = '';
+    addItem() {
+      const endpoint = 'http://localhost:8080/api/v1/article';
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: this.newItem.trim(),
+          status: false,
+        }),
+      };
+
+      fetch(endpoint, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          this.items.push(result);
+          this.newItem = '';
+        })
+        .catch(error => console.log('error', error));
+    },
+
+    updateItem() {
+      const endpoint = `http://localhost:8080/api/v1/article/${this.items[this.editedItem].id}`;
+      const requestOptions = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: this.newItem.trim(),
+          status: this.items[this.editedItem].status,
+        }),
+      };
+
+      fetch(endpoint, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          this.items.splice(this.editedItem, 1, result);
+          this.newItem = '';
+          this.editedItem = null;
+        })
+        .catch(error => console.log('error', error));
+    },
+
+    deleteItem(index) {
+      const itemId = this.items[index].id;
+      const endpoint = `http://localhost:8080/api/v1/article/${itemId}`;
+      const requestOptions = {
+        method: 'DELETE',
+      };
+
+      fetch(endpoint, requestOptions)
+        .then(response => {
+          if (response.ok) {
+            this.items.splice(index, 1);
+          } else {
+            console.error('Failed to delete item');
+          }
+        })
+        .catch(error => console.log('error', error));
     },
 
     editItem(index) {
@@ -99,16 +164,8 @@ export default {
       this.editedItem = index;
     },
 
-    deleteItem(index) {
-      this.items.splice(index, 1);
-    },
 
-    changeStatus(index) {
-      // Toggle the status of the item at the given index
-      this.items[index].status = !this.items[index].status;
-    },
-  },
-};
+  },}
 </script>
 
 <style scoped>
@@ -129,5 +186,10 @@ export default {
 /* Add some margin to the checkbox */
 input[type="checkbox"] {
   margin-right: 5px;
+}
+
+.checked {
+  background-color: #add8e6;
+  color: #000;
 }
 </style>
