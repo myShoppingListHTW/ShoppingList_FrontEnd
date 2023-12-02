@@ -1,8 +1,7 @@
 <template>
-  <div class="container" style="max-width: 600px">
+  <div class="container">
     <h2 class="text-center mt-3 mb-4">My Shopping List</h2>
 
-    <!-- Input -->
     <div class="d-flex justify-content-center align-items-center mb-3">
       <input
         type="text"
@@ -14,14 +13,12 @@
       <button @click="submitItem" class="btn btn-success rounded-0 ml-2">Add</button>
     </div>
 
-    <!-- Task table -->
     <table class="table table-bordered table-striped table-dark">
       <thead>
       <tr>
         <th scope="col">Item</th>
         <th scope="col">Status</th>
         <th scope="col" class="text-center">Actions</th>
-        <th scope="col" class="text-center"></th>
       </tr>
       </thead>
       <tbody>
@@ -38,19 +35,11 @@
           </div>
         </td>
         <td>
-          <div class="d-flex align-items-center">
-            {{ item.status ? 'Not Empty' : 'Empty' }}
-          </div>
+          <div>{{ item.status ? 'Not Empty' : 'Empty' }}</div>
         </td>
-        <td>
-          <div class="text-center">
-            <button @click="editItem(index)" class="btn btn-primary btn-sm">Edit</button>
-          </div>
-        </td>
-        <td>
-          <div class="text-center">
-            <button @click="deleteItem(index)" class="btn btn-danger btn-sm">Delete</button>
-          </div>
+        <td class="text-center">
+          <button @click="editItem(index)" class="btn btn-primary btn-sm">Edit</button>
+          <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2">Delete</button>
         </td>
       </tr>
       </tbody>
@@ -60,7 +49,6 @@
 
 <script>
 export default {
-  name: 'items',
   data() {
     return {
       newItem: '',
@@ -71,66 +59,41 @@ export default {
   mounted() {
     this.fetchItems();
   },
-
   methods: {
     fetchItems() {
       const endpoint = 'http://localhost:8080/api/v1/article';
-      const requestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-      };
-
-      fetch(endpoint, requestOptions)
+      fetch(endpoint)
         .then(response => response.json())
         .then(result => (this.items = result))
-        .catch(error => console.log('error', error));
+        .catch(error => console.error('Error fetching items:', error));
     },
-
     submitItem() {
       if (this.newItem.trim() === '') return;
-
-      if (this.editedItem !== null) {
-        this.updateItem();
-      } else {
-        this.addItem();
-      }
+      this.editedItem !== null ? this.updateItem() : this.addItem();
     },
-
     addItem() {
       const endpoint = 'http://localhost:8080/api/v1/article';
       const requestOptions = {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: this.newItem.trim(),
-          status: false,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: this.newItem.trim(), status: false }),
       };
-
       fetch(endpoint, requestOptions)
         .then(response => response.json())
         .then(result => {
           this.items.push(result);
           this.newItem = '';
         })
-        .catch(error => console.log('error', error));
+        .catch(error => console.error('Error adding item:', error));
     },
-
     updateItem() {
-      const endpoint = `http://localhost:8080/api/v1/article/${this.items[this.editedItem].id}`;
+      const itemId = this.items[this.editedItem].id;
+      const endpoint = `http://localhost:8080/api/v1/article/${itemId}`;
       const requestOptions = {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: this.newItem.trim(),
-          status: this.items[this.editedItem].status,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: this.newItem.trim(), status: this.items[this.editedItem].status }),
       };
-
       fetch(endpoint, requestOptions)
         .then(response => response.json())
         .then(result => {
@@ -138,39 +101,30 @@ export default {
           this.newItem = '';
           this.editedItem = null;
         })
-        .catch(error => console.log('error', error));
+        .catch(error => console.error('Error updating item:', error));
     },
-
     deleteItem(index) {
       const itemId = this.items[index].id;
       const endpoint = `http://localhost:8080/api/v1/article/${itemId}`;
-      const requestOptions = {
-        method: 'DELETE',
-      };
-
+      const requestOptions = { method: 'DELETE' };
       fetch(endpoint, requestOptions)
-        .then(response => {
-          if (response.ok) {
-            this.items.splice(index, 1);
-          } else {
-            console.error('Failed to delete item');
-          }
-        })
-        .catch(error => console.log('error', error));
+        .then(response => response.ok ? this.items.splice(index, 1) : console.error('Failed to delete item'))
+        .catch(error => console.error('Error deleting item:', error));
     },
-
     editItem(index) {
       this.newItem = this.items[index].name;
       this.editedItem = index;
     },
 
 
-  },}
+  },
+};
 </script>
 
 <style scoped>
 .container {
-  max-width: 1300px;
+  max-width: 800px;
+  overflow: auto;
   margin: auto;
   padding: 20px;
   position: absolute;
@@ -178,23 +132,11 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 .btn-sm {
   padding: 0.2rem 0.5rem;
   font-size: 0.8rem;
 }
-
 .line-through {
   text-decoration: line-through;
-}
-
-/* Add some margin to the checkbox */
-input[type="checkbox"] {
-  margin-right: 5px;
-}
-
-.checked {
-  background-color: #add8e6;
-  color: #000;
 }
 </style>
