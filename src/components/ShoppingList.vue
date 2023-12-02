@@ -19,7 +19,7 @@
       <thead>
       <tr>
         <th scope="col">Item</th>
-        <th scope="col">Status</th> <!-- New column for status -->
+        <th scope="col">Status</th>
         <th scope="col" class="text-center">Actions</th>
         <th scope="col" class="text-center"></th>
       </tr>
@@ -170,8 +170,13 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 600px;
+  max-width: 1300px;
   margin: auto;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .btn-sm {
