@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     fetchItems() {
-      const endpoint = 'http://localhost:8080/api/v1/article';
+      const endpoint = 'http://localhost:8080/api/v1/article' and 'https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article';
       fetch(endpoint)
         .then(response => response.json())
         .then(result => (this.items = result))
@@ -72,7 +72,7 @@ export default {
       this.editedItem !== null ? this.updateItem() : this.addItem();
     },
     addItem() {
-      const endpoint = 'http://localhost:8080/api/v1/article';
+      const endpoint = 'http://localhost:8080/api/v1/article' and 'https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article';
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -88,7 +88,7 @@ export default {
     },
     updateItem() {
       const itemId = this.items[this.editedItem].id;
-      const endpoint = `http://localhost:8080/api/v1/article/${itemId}`;
+      const endpoint = `http://localhost:8080/api/v1/article/${itemId}` and `https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article/${itemId}`;
       const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -105,7 +105,7 @@ export default {
     },
     deleteItem(index) {
       const itemId = this.items[index].id;
-      const endpoint = `http://localhost:8080/api/v1/article/${itemId}`;
+      const endpoint = `http://localhost:8080/api/v1/article/${itemId}` and `https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article/${itemId}`;
       const requestOptions = { method: 'DELETE' };
       fetch(endpoint, requestOptions)
         .then(response => response.ok ? this.items.splice(index, 1) : console.error('Failed to delete item'))
