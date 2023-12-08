@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import {API_BASE_URL} from '../config/config.ts'; // Assuming the API_BASE_URL is defined in a constants file
 export default {
   data() {
     return {
@@ -60,35 +61,65 @@ export default {
     this.fetchItems();
   },
   methods: {
-    fetchItems() {
-      const endpoint = 'http://localhost:8080/api/v1/article' and 'https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article';
-      fetch(endpoint)
-        .then(response => response.json())
-        .then(result => (this.items = result))
-        .catch(error => console.error('Error fetching items:', error));
-    },
+  async fetchItems() {
+    const endpoint = `${API_BASE_URL}`;
+    try {
+      const response = await fetch(endpoint);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await response.json();
+      this.items = result;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+,
     submitItem() {
       if (this.newItem.trim() === '') return;
       this.editedItem !== null ? this.updateItem() : this.addItem();
-    },
-    addItem() {
-      const endpoint = 'http://localhost:8080/api/v1/article' and 'https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article';
-      const requestOptions = {
+    },addItem() {
+    const endpoint = `${API_BASE_URL}`;
+    const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: this.newItem.trim(), status: false }),
-      };
-      fetch(endpoint, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-          this.items.push(result);
-          this.newItem = '';
-        })
-        .catch(error => console.error('Error adding item:', error));
-    },
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: this.newItem.trim(),
+            status: false
+        }),
+    };
+
+    fetch(endpoint, requestOptions)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text(); // Read the entire response as text
+    })
+    .then(result => {
+        console.log('Server response:', result); // Log the response
+
+        // Check if the result is not empty before parsing as JSON
+        const parsedResult = result ? JSON.parse(result) : null;
+
+        if (parsedResult) {
+            this.items.push(parsedResult);
+            this.newItem = '';
+        } else {
+            console.error('Empty response or invalid JSON');
+        }
+    })
+    .catch(error => console.error('Error adding item:', error));
+}
+
+
+,
     updateItem() {
       const itemId = this.items[this.editedItem].id;
-      const endpoint = `http://localhost:8080/api/v1/article/${itemId}` and `https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article/${itemId}`;
+      const endpoint = `${API_BASE_URL}/${itemId}`;
       const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -105,7 +136,7 @@ export default {
     },
     deleteItem(index) {
       const itemId = this.items[index].id;
-      const endpoint = `http://localhost:8080/api/v1/article/${itemId}` and `https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article/${itemId}`;
+      const endpoint = `${API_BASE_URL}/${itemId}`;
       const requestOptions = { method: 'DELETE' };
       fetch(endpoint, requestOptions)
         .then(response => response.ok ? this.items.splice(index, 1) : console.error('Failed to delete item'))
