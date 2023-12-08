@@ -15,5 +15,9 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  build:{
+    target: 'esnext'
   }
+
 })

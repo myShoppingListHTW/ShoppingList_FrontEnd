@@ -3,6 +3,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "experimentalDecorators": true,
+      "target": "esnext",
     "allowSyntheticDefaultImports": true
   },
   "files": [],
