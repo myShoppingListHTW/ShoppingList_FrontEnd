@@ -12,44 +12,60 @@
       />
       <button @click="submitItem" class="btn btn-success rounded-0 ml-2">Add</button>
     </div>
+    <add-products-button></add-products-button>
 
     <table class="table table-bordered table-striped table-dark">
       <thead>
-      <tr>
-        <th scope="col">Item</th>
-        <th scope="col">Status</th>
-        <th scope="col" class="text-center">Actions</th>
-      </tr>
+        <tr>
+          <th scope="col" class="checkbox-col"></th>
+          <th scope="col">Item</th>
+          <th scope="col">Status</th>
+          <th scope="col">Category</th>
+          <th scope="col" class="text-center">Actions</th>
+        </tr>
       </thead>
       <tbody>
-      <tr v-for="(item, index) in items" :key="index">
-        <td>
-          <div class="d-flex align-items-center">
-            <input
-              type="checkbox"
-              :checked="item.status"
-              @change="toggleStatus(index)"
-              class="mr-2"
-            />
-            <span :class="{ 'line-through': item.status }">{{ item.name }}</span>
-          </div>
-        </td>
-        <td>
-          <div>{{ item.status ? 'Not Empty' : 'Empty' }}</div>
-        </td>
-        <td class="text-center">
-          <button @click="editItem(index)" class="btn btn-primary btn-sm">Edit</button>
-          <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2">Delete</button>
-        </td>
-      </tr>
+        <tr v-for="(item, index) in items" :key="index">
+          <td class="checkbox-col">
+            <div class="d-flex align-items-center">
+              <input
+                type="checkbox"
+                :checked="item.status"
+                @change="toggleStatus(index)"
+                class="mr-2"
+              />
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <span :class="{ 'line-through': item.status }">{{ item.name }}</span>
+            </div>
+          </td>
+          <td>
+            <div>{{ item.status ? 'Filled' : 'Empty' }}</div>
+          </td>
+          <td>
+            <div>{{ item.category || 'N/A' }}</div>
+          </td>
+          <td class="text-center">
+            <button @click="editItem(index)" class="btn btn-primary btn-sm">Edit</button>
+            <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2">Delete</button>
+          </td>
+        </tr>
       </tbody>
     </table>
+    <button class="w-auto Button_default__NXf3e text-sm" type="button" @click="addProducts">
+    Add products
+  </button>
   </div>
 </template>
 
 <script>
-import {API_BASE_URL} from '../config/config.ts'; // Assuming the API_BASE_URL is defined in a constants file
+
+import axios from 'axios'; // Import Axios for HTTP requests
+import { API_BASE_URL } from '../config/config.ts';
 export default {
+
   data() {
     return {
       newItem: '',
@@ -59,76 +75,65 @@ export default {
   },
   mounted() {
     this.fetchItems();
-  },
-  methods: {
-  async fetchItems() {
-    const endpoint = `${API_BASE_URL}`;
-    try {
-      const response = await fetch(endpoint);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const result = await response.json();
-      this.items = result;
-    } catch (error) {
-      console.error(error);
-    }
   }
 ,
+  methods: {
+    addProducts() {
+      // Implement your logic for adding products here
+      console.log('Adding products...');
+    },
+    async fetchItems() {
+      try {
+        const response = await axios.get(API_BASE_URL);
+        let sortedItems = response.data.sort((a, b) => {
+          // Sort by status (empty goes up, filled down)
+          if (a.empty && !b.empty) return -1;
+          if (!a.empty && b.empty) return 1;
+
+          // Sort alphabetically
+          return a.name.localeCompare(b.name);
+        });
+
+        this.items = sortedItems;
+      } catch (error) {
+        console.error('Error fetching items:', error);
+      }
+    },
+
     submitItem() {
       if (this.newItem.trim() === '') return;
       this.editedItem !== null ? this.updateItem() : this.addItem();
-    },addItem() {
-    const endpoint = `${API_BASE_URL}`;
-    const requestOptions = {
+    },
+    addItem() {
+      const requestOptions = {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: this.newItem.trim(),
-            status: false
+          name: this.newItem.trim(),
+          status: false
         }),
-    };
+      };
 
-    fetch(endpoint, requestOptions)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.text(); // Read the entire response as text
-    })
-    .then(result => {
-        console.log('Server response:', result); // Log the response
-
-        // Check if the result is not empty before parsing as JSON
-        const parsedResult = result ? JSON.parse(result) : null;
-
-        if (parsedResult) {
-            this.items.push(parsedResult);
-            this.newItem = '';
-        } else {
-            console.error('Empty response or invalid JSON');
-        }
-    })
-    .catch(error => console.error('Error adding item:', error));
-}
-
-
-,
+      axios.post(API_BASE_URL, requestOptions.body, { headers: requestOptions.headers })
+        .then(response => {
+          this.items.push(response.data);
+          this.newItem = '';
+        })
+        .catch(error => console.error('Error adding item:', error));
+    },
     updateItem() {
       const itemId = this.items[this.editedItem].id;
-      const endpoint = `${API_BASE_URL}/${itemId}`;
       const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: this.newItem.trim(), status: this.items[this.editedItem].status }),
       };
-      fetch(endpoint, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-          this.items.splice(this.editedItem, 1, result);
+
+      axios.put(`${API_BASE_URL}/${itemId}`, requestOptions.body, { headers: requestOptions.headers })
+        .then(response => {
+          this.items.splice(this.editedItem, 1, response.data);
           this.newItem = '';
           this.editedItem = null;
         })
@@ -136,18 +141,25 @@ export default {
     },
     deleteItem(index) {
       const itemId = this.items[index].id;
-      const endpoint = `${API_BASE_URL}/${itemId}`;
-      const requestOptions = { method: 'DELETE' };
-      fetch(endpoint, requestOptions)
-        .then(response => response.ok ? this.items.splice(index, 1) : console.error('Failed to delete item'))
+
+      axios.delete(`${API_BASE_URL}/${itemId}`)
+        .then(response => {
+          if (response.status === 200) {
+            this.items.splice(index, 1);
+          } else {
+            console.error('Failed to delete item');
+          }
+        })
         .catch(error => console.error('Error deleting item:', error));
     },
     editItem(index) {
       this.newItem = this.items[index].name;
       this.editedItem = index;
     },
-
-
+    toggleStatus(index) {
+      this.items[index].status = !this.items[index].status;
+      this.updateItem(index);
+    },
   },
 };
 </script>
@@ -163,11 +175,33 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/* Add styles for table cells */
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* Add styles for status column */
+.table td:nth-child(2) {
+  font-weight: bold;
+}
+
 .btn-sm {
   padding: 0.2rem 0.5rem;
   font-size: 0.8rem;
 }
+
 .line-through {
   text-decoration: line-through;
+}
+.checkbox-col {
+  width: 20px; /* Adjust the width as needed */
+}
+
+/* Add margin to the action buttons */
+.table .btn-sm {
+  margin-right: 15px;
 }
 </style>
