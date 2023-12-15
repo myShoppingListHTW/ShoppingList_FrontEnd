@@ -1,7 +1,7 @@
 <template>
+
   <div class="container">
     <h2 class="text-center mt-3 mb-4">My Shopping List</h2>
-
     <div class="d-flex justify-content-center align-items-center mb-3">
       <input
         type="text"
@@ -12,7 +12,6 @@
       />
       <button @click="submitItem" class="btn btn-success rounded-0 ml-2">Add</button>
     </div>
-    <add-products-button></add-products-button>
 
     <table class="table table-bordered table-striped table-dark">
       <thead>
@@ -60,7 +59,7 @@
   </div>
 </template>
 
-<script>
+<script >
 
 import axios from 'axios'; // Import Axios for HTTP requests
 import { API_BASE_URL } from '../config/config.ts';
@@ -182,20 +181,15 @@ export default {
   text-align: center;
   vertical-align: middle;
 }
-
 /* Add styles for status column */
 .table td:nth-child(2) {
   font-weight: bold;
 }
-
 .btn-sm {
   padding: 0.2rem 0.5rem;
   font-size: 0.8rem;
 }
 
-.line-through {
-  text-decoration: line-through;
-}
 .checkbox-col {
   width: 20px; /* Adjust the width as needed */
 }
@@ -205,3 +199,4 @@ export default {
   margin-right: 15px;
 }
 </style>
+export ShoppingList;
