@@ -12,51 +12,12 @@
       />
       <button @click="submitItem" class="btn btn-success rounded-0 ml-2">Add</button>
     </div>
-    <add-products-button></add-products-button>
-
-    <table class="table table-bordered table-striped table-dark">
-      <thead>
-        <tr>
-          <th scope="col" class="checkbox-col"></th>
-          <th scope="col">Item</th>
-          <th scope="col">Status</th>
-          <th scope="col">Category</th>
-          <th scope="col" class="text-center">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, index) in items" :key="index">
-          <td class="checkbox-col">
-            <div class="d-flex align-items-center">
-              <input
-                type="checkbox"
-                :checked="item.status"
-                @change="toggleStatus(index)"
-                class="mr-2"
-              />
-            </div>
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <span :class="{ 'line-through': item.status }">{{ item.name }}</span>
-            </div>
-          </td>
-          <td>
-            <div>{{ item.status ? 'Filled' : 'Empty' }}</div>
-          </td>
-          <td>
-            <div>{{ item.category || 'N/A' }}</div>
-          </td>
-          <td class="text-center">
-            <button @click="editItem(index)" class="btn btn-primary btn-sm">Edit</button>
-            <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <button class="w-auto Button_default__NXf3e text-sm" type="button" @click="addProducts">
-    Add products
-  </button>
+    <ItemsTable
+      :items="items"
+      :toggleStatus="toggleStatus"
+      :editItem="editItem"
+      :deleteItem="deleteItem"
+    />
   </div>
 </template>
 
@@ -64,8 +25,12 @@
 
 import axios from 'axios'; // Import Axios for HTTP requests
 import { API_BASE_URL } from '../config/config.ts';
-export default {
+import ItemsTable from './ItemsTable.vue';
 
+  export default {
+    components: {
+      ItemsTable,
+    },
   data() {
     return {
       newItem: '',
@@ -176,14 +141,11 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-/* Add styles for table cells */
 .table th,
 .table td {
   text-align: center;
   vertical-align: middle;
 }
-
-/* Add styles for status column */
 .table td:nth-child(2) {
   font-weight: bold;
 }
@@ -197,10 +159,9 @@ export default {
   text-decoration: line-through;
 }
 .checkbox-col {
-  width: 20px; /* Adjust the width as needed */
+  width: 20px;
 }
 
-/* Add margin to the action buttons */
 .table .btn-sm {
   margin-right: 15px;
 }
