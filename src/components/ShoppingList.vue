@@ -70,7 +70,7 @@ export default {
     return {
       newItem: '',
       items: [],
-      editedItem: null,
+      editedItem: null
     };
   },
   mounted() {
