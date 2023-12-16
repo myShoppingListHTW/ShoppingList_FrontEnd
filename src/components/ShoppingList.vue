@@ -26,6 +26,8 @@
 import axios from 'axios'; // Import Axios for HTTP requests
 import { API_BASE_URL } from '@/config/config';
 import ItemsTable from './ItemsTable.vue';
+import eventBus from "@/eventBus";
+import {onMounted} from "vue";
   export default {
     components: {
       ItemsTable,
@@ -74,7 +76,8 @@ import ItemsTable from './ItemsTable.vue';
         },
         body: JSON.stringify({
           name: this.newItem.trim(),
-          status: false
+          status: false,
+          category: 'FRUIT',
         }),
       };
 
@@ -138,7 +141,10 @@ import ItemsTable from './ItemsTable.vue';
         .catch(error => console.error('Error updating item status:', error));
     },
   },
-};
+  };
+onMounted(() => {
+  eventBus.on('itemAdded', fetchItems);
+});
 </script>
 
 <style scoped>
