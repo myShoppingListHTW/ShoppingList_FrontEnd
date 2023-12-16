@@ -15,19 +15,19 @@
         <div class="d-flex align-items-center">
           <input
             type="checkbox"
-            :checked="item.status"
-            @change="toggleStatus(index)"
+            :checked="item.empty === false"
+            @change="updateStatus(index)"
             class="mr-2"
           />
         </div>
       </td>
       <td>
         <div class="d-flex align-items-center">
-          <span :class="{ 'line-through': item.status }">{{ item.name }}</span>
+          <span :class="{ 'line-through': item.empty === false }">{{ item.name }}</span>
         </div>
       </td>
       <td>
-        <div>{{ item.status ? 'Filled' : 'Empty' }}</div>
+        <div>{{ item.empty === false ? 'Filled' : 'Empty' }}</div>
       </td>
       <td>
         <div>{{ item.category || 'N/A' }}</div>
@@ -45,15 +45,14 @@
 export default {
   props: {
     items: Array,
-    toggleStatus: Function,
     editItem: Function,
     deleteItem: Function,
+    updateStatus: Function,
   },
 };
 </script>
 
 <style scoped>
-/* You can keep the styling specific to the table if needed */
 .table th,
 .table td {
   text-align: center;

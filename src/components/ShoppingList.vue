@@ -14,9 +14,9 @@
     </div>
     <ItemsTable
       :items="items"
-      :toggleStatus="toggleStatus"
       :editItem="editItem"
       :deleteItem="deleteItem"
+      :updateStatus="updateStatus"
     />
   </div>
 </template>
@@ -36,6 +36,7 @@ import ItemsTable from './ItemsTable.vue';
       newItem: '',
       items: [],
       editedItem: null
+
     };
   },
   mounted() {
@@ -43,10 +44,7 @@ import ItemsTable from './ItemsTable.vue';
   }
 ,
   methods: {
-    addProducts() {
-      // Implement your logic for adding products here
-      console.log('Adding products...');
-    },
+
     async fetchItems() {
       try {
         const response = await axios.get(API_BASE_URL);
@@ -121,9 +119,23 @@ import ItemsTable from './ItemsTable.vue';
       this.newItem = this.items[index].name;
       this.editedItem = index;
     },
-    toggleStatus(index) {
-      this.items[index].status = !this.items[index].status;
-      this.updateItem(index);
+
+
+    updateStatus(index) {
+      const itemId = this.items[index].id;
+      const newStatus = !this.items[index].empty;
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: this.items[index].name, empty: newStatus }),
+      };
+
+      axios.put(`${API_BASE_URL}/${itemId}`, requestOptions.body, { headers: requestOptions.headers })
+        .then(response => {
+          this.items.splice(index, 1, response.data);
+        })
+        .catch(error => console.error('Error updating item status:', error));
     },
   },
 };
@@ -150,19 +162,4 @@ import ItemsTable from './ItemsTable.vue';
   font-weight: bold;
 }
 
-.btn-sm {
-  padding: 0.2rem 0.5rem;
-  font-size: 0.8rem;
-}
-
-.line-through {
-  text-decoration: line-through;
-}
-.checkbox-col {
-  width: 20px;
-}
-
-.table .btn-sm {
-  margin-right: 15px;
-}
 </style>
