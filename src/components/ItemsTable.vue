@@ -33,8 +33,12 @@
         <div>{{ item.category || 'N/A' }}</div>
       </td>
       <td class="text-center">
-        <button @click="editItem(index)" class="btn btn-primary btn-sm">Edit</button>
-        <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2">Delete</button>
+        <button @click="editItem(index)" class="btn btn-primary btn-sm">
+          ✎
+        </button>
+        <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2">
+          ✖
+        </button>
       </td>
     </tr>
     </tbody>
@@ -76,5 +80,14 @@ export default {
 
 .table .btn-sm {
   margin-right: 15px;
+  .table .btn-sm {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+
+  .table .btn-sm {
+    margin-right: 5px;
+  }
 }
 </style>

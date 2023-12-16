@@ -24,9 +24,8 @@
 <script>
 
 import axios from 'axios'; // Import Axios for HTTP requests
-import { API_BASE_URL } from '../config/config.ts';
+import { API_BASE_URL } from '@/config/config';
 import ItemsTable from './ItemsTable.vue';
-
   export default {
     components: {
       ItemsTable,
@@ -86,6 +85,7 @@ import ItemsTable from './ItemsTable.vue';
         })
         .catch(error => console.error('Error adding item:', error));
     },
+
     updateItem() {
       const itemId = this.items[this.editedItem].id;
       const requestOptions = {
