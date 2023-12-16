@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <shopping-list></shopping-list>
+    <ShoppingList></ShoppingList>
   </div>
 </template>
 
 <script>
-import ShoppingList from './components/ShoppingList.vue'
+import ShoppingList from './views/ShoppingListView.vue'; // Make sure to include the file extension (.vue)
 
 export default {
   name: 'App',
