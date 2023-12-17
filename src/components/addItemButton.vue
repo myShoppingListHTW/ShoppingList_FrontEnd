@@ -26,7 +26,7 @@ import eventBus from "@/eventBus";
 
 const popupVisible = ref(false);
 const itemName = ref('');
-const selectedCategory = ref('FRUIT');
+const selectedCategory = ref('OTHER');
 const categories = ['FRUIT', 'VEGETABLE', 'MEAT', 'FISH', 'DAIRY', 'BAKERY', 'SWEETS', 'DRINKS', 'ALCOHOL', 'OTHER'];
 
 const togglePopup = () => {
