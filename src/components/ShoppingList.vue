@@ -2,7 +2,7 @@
   <div class="container">
     <h2 class="text-center mt-3 mb-4">My Shopping List</h2>
     <div>
-      <table class="table table-bordered table-striped table-dark">
+      <table class="table table-responsive table-borderless table-hover table-responsive-lg">
         <thead>
         <tr>
           <th scope="col" class="checkbox-col"></th>
@@ -13,24 +13,24 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(item, index) in items" :key="index">
+
+        <tr v-for="(item, index) in items" :key="index" :class="{ 'table-success': !item.empty }">
           <td class="checkbox-col">
-            <div class="d-flex align-items-center">
+            <div class="form-check">
               <input
                 type="checkbox"
                 :checked="item.empty === false"
                 @change="updateStatus(index)"
-                class="mr-2"
+                class="form-check-input"
               />
             </div>
           </td>
           <td>
-            <div class="d-flex align-items-center">
-              <span :class="{ 'line-through': item.empty === false }">{{ item.name }}</span>
-            </div>
+            <span :class="{ 'line-through': item.empty === false }">{{ item.name }}</span>
           </td>
           <td>
-            <div>{{ item.empty === false ? 'Filled' : 'Empty' }}</div>
+            <div :class="{ 'text-success': item.empty === false, 'text-danger': item.empty }">
+              {{ item.empty ? 'Empty' : 'Filled' }}</div>
           </td>
           <td>
             <div>{{ item.category || 'NO CAT*' }}</div>
@@ -50,25 +50,21 @@
   </div>
 </template>
 
+
 <script>
 
 import axios from 'axios'; // Import Axios for HTTP requests
 import { API_BASE_URL } from '@/config/config';
-import eventBus from "@/eventBus";
-import {onMounted} from "vue";
   export default {
     props: {
-      items: Array,
       editItem: Function,
       deleteItem: Function,
       updateStatus: Function,
     },
   data() {
     return {
-      newItem: '',
       items: [],
       editedItem: null
-
     };
   },
   mounted() {
@@ -76,65 +72,32 @@ import {onMounted} from "vue";
   }
 ,
   methods: {
+    async sortItems(){
+    try {
+      let sortedItems1 = this.items.sort((a, b) => {
+        // Sort by status (empty goes up, filled down)
+        if (a.empty && !b.empty) return -1;
+        if (!a.empty && b.empty) return 1;
 
+        // Sort alphabetically
+        return a.name.localeCompare(b.name);
+      });
+
+      this.items = sortedItems;
+    } catch (error) {
+      console.error('Error fetching items:', error);
+    }
+  },
     async fetchItems() {
       try {
         const response = await axios.get(API_BASE_URL);
-        let sortedItems = response.data.sort((a, b) => {
+        let responseItems = response.data
           // Sort by status (empty goes up, filled down)
-          if (a.empty && !b.empty) return -1;
-          if (!a.empty && b.empty) return 1;
-
-          // Sort alphabetically
-          return a.name.localeCompare(b.name);
-        });
-
-        this.items = sortedItems;
+        this.items = responseItems;
+        this.sortItems();
       } catch (error) {
         console.error('Error fetching items:', error);
       }
-    },
-
-    submitItem() {
-      if (this.newItem.trim() === '') return;
-      this.editedItem !== null ? this.updateItem() : this.addItem();
-    },
-    addItem() {
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: this.newItem.trim(),
-          status: false,
-          category: 'FRUIT',
-        }),
-      };
-
-      axios.post(API_BASE_URL, requestOptions.body, { headers: requestOptions.headers })
-        .then(response => {
-          this.items.push(response.data);
-          this.newItem = '';
-        })
-        .catch(error => console.error('Error adding item:', error));
-    },
-
-    updateItem() {
-      const itemId = this.items[this.editedItem].id;
-      const requestOptions = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: this.newItem.trim(), status: this.items[this.editedItem].status }),
-      };
-
-      axios.put(`${API_BASE_URL}/${itemId}`, requestOptions.body, { headers: requestOptions.headers })
-        .then(response => {
-          this.items.splice(this.editedItem, 1, response.data);
-          this.newItem = '';
-          this.editedItem = null;
-        })
-        .catch(error => console.error('Error updating item:', error));
     },
     deleteItem(index) {
       const itemId = this.items[index].id;
@@ -150,44 +113,39 @@ import {onMounted} from "vue";
         .catch(error => console.error('Error deleting item:', error));
     },
     editItem(index) {
-      this.newItem = this.items[index].name;
-      this.editedItem = index;
+      let itemsName = this.items[index].name;
+      let itemsCategory = this.items[index].category;
+
     },
-
-
     updateStatus(index) {
       const itemId = this.items[index].id;
+      const itemsName = this.items[index].name;
       const newStatus = !this.items[index].empty;
-
+      const itemsCategory = this.items[index].category;
       const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: this.items[index].name, empty: newStatus }),
+        body: JSON.stringify({ name: itemsName , empty: newStatus, category: itemsCategory }),
       };
 
       axios.put(`${API_BASE_URL}/${itemId}`, requestOptions.body, { headers: requestOptions.headers })
         .then(response => {
           this.items.splice(index, 1, response.data);
+          this.fetchItems();
         })
         .catch(error => console.error('Error updating item status:', error));
     },
   },
   };
-onMounted(() => {
-  eventBus.on('itemAdded', fetchItems);
-});
+
 </script>
 
 <style scoped>
 .container {
   max-width: 800px;
-  overflow: auto;
   margin: auto;
   padding: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
 }
 
 .table th,
@@ -195,16 +153,24 @@ onMounted(() => {
   text-align: center;
   vertical-align: middle;
 }
+
+.table th {
+  background-color: #343a40;
+  color: #ffffff;
+}
+
+
 .table td:nth-child(2) {
   font-weight: bold;
 }
-.table th,
-.table td {
-  text-align: center;
-  vertical-align: middle;
+
+
+.table-hover tbody tr:hover {
+  background-color: #4e5d6c;
 }
-.table td:nth-child(2) {
-  font-weight: bold;
+
+.form-check-input {
+  margin-top: 0.3rem;
 }
 
 .btn-sm {
@@ -215,23 +181,11 @@ onMounted(() => {
 .line-through {
   text-decoration: line-through;
 }
+
 .checkbox-col {
   width: 20px;
 }
 
-.table .btn-sm {
-  margin-right: 15px;
-  .table .btn-sm {
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
-  }
 
 
-  .table .btn-sm {
-    margin-right: 5px;
-  }
-}
 </style>
-
-
-

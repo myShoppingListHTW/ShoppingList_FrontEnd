@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <!-- Display ShoppingList component -->
+  <div class="container">
     <ShoppingList :items="shoppingItems" />
-
-    <!-- Display addItemButton component -->
     <addItemButton @addItem="addItem" />
   </div>
 </template>
@@ -19,3 +16,5 @@ const addItem = (item) => {
   shoppingItems.value.push(item);
 };
 </script>
+
+

@@ -3,7 +3,7 @@
     <button class="create-item-button" @click="togglePopup">Create Item</button>
     <div v-if="popupVisible" class="popup">
       <form @submit.prevent="addItem">
-        <label for="itemName">Name:</label>
+        <label for="itemName">Item's Name:</label>
         <input type="text" id="itemName" v-model="itemName" required />
 
         <label for="category">Category:</label>
@@ -19,10 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import { API_BASE_URL } from '@/config/config';
+import { API_BASE_URL } from '@/config/config.ts';
 import { ref } from 'vue';
 import axios from 'axios';
-import eventBus from "@/eventBus";
 
 const popupVisible = ref(false);
 const itemName = ref('');
@@ -47,18 +46,13 @@ const addItem = async () => {
       category: selectedCategory.value,
     }),
   };
-
   try {
     const response = await axios.post(API_BASE_URL, requestOptions.body, { headers: requestOptions.headers });
-    // Direkter Zugriff auf das Ref, wenn verfügbar
-    eventBus.emit('item-added', response.data);
     itemName.value = '';
-    eventBus.emit('item-added', response.data);
+    this.$emit('addedItem');
   } catch (error) {
     console.error('Error adding item:', error);
   }
-
-  // Schließe das Popup
   togglePopup();
 };
 </script>
@@ -67,9 +61,9 @@ const addItem = async () => {
 .create-item-button {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 50%;
   padding: 10px;
-  background-color: #28a745;
+  background-color: #4caf50; /* Green color */
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -84,7 +78,8 @@ const addItem = async () => {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
-  background-color: #3498db;
+  background-color: #343a3f; /* Blue color */
+  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
@@ -103,8 +98,14 @@ input,
 select,
 button {
   margin-bottom: 16px;
-  padding: 8px;
+  padding: 12px; /* Increased padding */
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #4caf50; /* Green color for buttons */
+  color: #fff;
+  cursor: pointer;
 }
 </style>
