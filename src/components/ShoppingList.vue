@@ -1,15 +1,14 @@
 <template>
-  <div class="container">
-    <h2 class="text-center mt-3 mb-4">My Shopping List</h2>
+
     <div>
       <table class="table table-responsive table-borderless table-hover table-responsive-lg">
         <thead>
         <tr>
-          <th scope="col" class="checkbox-col"></th>
-          <th scope="col">Item</th>
-          <th scope="col">Status</th>
-          <th scope="col">Category</th>
-          <th scope="col" class="text-center">Actions</th>
+          <th scope="col" class="checkbox-col sticky-header"></th>
+          <th scope="col" class="sticky-header">Item</th>
+          <th scope="col" class="sticky-header">Status</th>
+          <th scope="col" class="sticky-header">Category</th>
+          <th scope="col" class="text-center sticky-header">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -46,7 +45,7 @@
         </tr>
         </tbody>
       </table>
-    </div>
+
   </div>
 </template>
 
@@ -145,7 +144,11 @@ import { API_BASE_URL } from '@/config/config';
   max-width: 800px;
   margin: auto;
   padding: 20px;
-
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  height: fit-content ;
 }
 
 .table th,
@@ -158,12 +161,9 @@ import { API_BASE_URL } from '@/config/config';
   background-color: #343a40;
   color: #ffffff;
 }
-
-
 .table td:nth-child(2) {
   font-weight: bold;
 }
-
 
 .table-hover tbody tr:hover {
   background-color: #4e5d6c;
@@ -172,20 +172,21 @@ import { API_BASE_URL } from '@/config/config';
 .form-check-input {
   margin-top: 0.3rem;
 }
-
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: #343a40;
+  color: #ffffff;
+  z-index: 1;
+}
 .btn-sm {
   padding: 0.2rem 0.5rem;
   font-size: 0.8rem;
 }
-
 .line-through {
   text-decoration: line-through;
 }
-
 .checkbox-col {
   width: 20px;
 }
-
-
-
 </style>

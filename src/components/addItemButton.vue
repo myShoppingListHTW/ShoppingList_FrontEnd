@@ -61,7 +61,7 @@ const addItem = async () => {
 .create-item-button {
   position: fixed;
   bottom: 20px;
-  right: 50%;
+  left: auto;
   padding: 10px;
   background-color: #4caf50; /* Green color */
   color: #fff;
@@ -74,7 +74,7 @@ const addItem = async () => {
 
 .popup {
   position: fixed;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
