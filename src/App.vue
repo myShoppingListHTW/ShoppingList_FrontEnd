@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ShoppingList from './views/ShoppingListView.vue'; // Make sure to include the file extension (.vue)
+import ShoppingList from '../src/Views/ShoppingListView.vue';
 
 export default {
   name: 'App',
