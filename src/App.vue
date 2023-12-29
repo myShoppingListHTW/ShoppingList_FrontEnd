@@ -1,24 +1,52 @@
 <template>
-  <div id="app" >
-    <ShoppingList></ShoppingList>
+  <div>
+    <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
+    <ShoppingList />
   </div>
 </template>
 
 <script>
+import DarkModeSwitch from '../src/components/modeSwitcher.vue';
 import ShoppingList from '../src/Views/ShoppingListView.vue';
 
 export default {
   name: 'App',
   components: {
+    DarkModeSwitch,
     ShoppingList
+  },
+  data() {
+    return {
+      darkMode: false
+    };
+  },
+  watch: {
+    darkMode(newDarkMode) {
+      // Log to console to check if dark mode is being toggled
+      console.log('Dark Mode Toggled:', newDarkMode);
+
+      // Apply the dark mode class directly to the body element
+      document.body.classList.toggle('dark-mode', newDarkMode);
+    }
+  },
+  methods: {
+    toggleDarkMode() {
+      this.darkMode = !this.darkMode;
+    }
   }
 }
 </script>
-<style scoped>
-.container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  background-color: #f0f0f0; /* Set your desired background color */
+
+<style>
+/* Add your existing styles here */
+/* For example: */
+
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+.dark-mode {
+  background-color: #2d2d2d; /* Set your desired dark background color */
+  color: #ffffff; /* Set your desired light text color for dark mode */
 }
 </style>

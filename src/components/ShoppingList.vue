@@ -114,7 +114,6 @@ import { API_BASE_URL } from '@/config/config';
     editItem(index) {
       let itemsName = this.items[index].name;
       let itemsCategory = this.items[index].category;
-
     },
     updateStatus(index) {
       const itemId = this.items[index].id;
@@ -140,6 +139,7 @@ import { API_BASE_URL } from '@/config/config';
 </script>
 
 <style scoped>
+
 .container {
   max-width: 800px;
   margin: auto;
@@ -158,7 +158,7 @@ import { API_BASE_URL } from '@/config/config';
 }
 
 .table th {
-  background-color: #343a40;
+  background-color: #4bae4f;
   color: #ffffff;
 }
 .table td:nth-child(2) {
@@ -189,4 +189,5 @@ import { API_BASE_URL } from '@/config/config';
 .checkbox-col {
   width: 20px;
 }
+
 </style>

@@ -49,7 +49,6 @@ const addItem = async () => {
   try {
     const response = await axios.post(API_BASE_URL, requestOptions.body, { headers: requestOptions.headers });
     itemName.value = '';
-    this.$emit('addedItem');
   } catch (error) {
     console.error('Error adding item:', error);
   }

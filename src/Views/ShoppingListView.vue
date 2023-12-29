@@ -22,18 +22,17 @@ const addItem = (item) => {
 
 <style scoped>
 .container {
-  max-width: 200px;
+  max-width: 800px;
   margin: auto;
   padding: 20px;
-  display: flex;
-  position: fixed;
-  top: 10px;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: stretch;
-  left: 20px;
+  background-color: #f0f0f0; /* Set your desired light background color */
+  color: #333; /* Set your desired dark text color for light mode */
 }
 
+.dark-mode .container {
+  background-color: #2d2d2d; /* Set your desired dark background color */
+  color: #ffffff; /* Set your desired light text color for dark mode */
+}
 .shopping-list-container {
   max-height: 500px; /* Adjust the maximum height as needed */
   overflow: auto;
