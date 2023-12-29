@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div class="filter-section">
+      <select v-model="selectedFilterCategory">
+        <option value="">All Categories</option>
+        <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
+      </select>
+      <button @click="applyFilter">Filter</button>
+    </div>
+  <div>
     <table class="table table-responsive table-borderless table-hover table-responsive-lg">
       <thead>
       <tr>
@@ -44,6 +52,7 @@
       <button @click="cancelEdit">Cancel</button>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -54,8 +63,11 @@ export default {
   data() {
     return {
       items: [],
+      allItems: [],
       editedItem: null,
-      showEditForm: false
+      showEditForm: false,
+      selectedFilterCategory: '', // For filtering items
+      categories: ['FRUIT', 'VEGETABLE', 'MEAT', 'FISH', 'DAIRY', 'BAKERY', 'SWEETS', 'DRINKS', 'ALCOHOL', 'OTHER']
     };
   },
   mounted() {
@@ -66,10 +78,20 @@ export default {
       try {
         const response = await axios.get(API_BASE_URL);
         this.items = response.data.map(item => ({ ...item, empty: item.empty !== false }));
+        this.allItems = [...this.items]; // Populate allItems after fetching data
         this.sortItems();
       } catch (error) {
         console.error('Error fetching items:', error);
       }
+    },
+
+    applyFilter() {
+      if (this.selectedFilterCategory) {
+        this.items = this.allItems.filter(item => item.category === this.selectedFilterCategory);
+      } else {
+        this.items = [...this.allItems];
+      }
+      this.sortItems();
     },
     sortItems() {
       this.items.sort((a, b) => {
