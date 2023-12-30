@@ -5,6 +5,7 @@
       <ShoppingList :items="shoppingItems" />
     </div>
     <addItemButton @addItem="addItem" />
+
   </div>
 </template>
 
