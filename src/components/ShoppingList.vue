@@ -44,12 +44,9 @@
         </tbody>
       </table>
 
-      <div v-if="showEditForm" class="edit-form">
-        <h3>Edit Item</h3>
-        <input v-model="editedItem.name" placeholder="Item Name" />
-        <input v-model="editedItem.category" placeholder="Category" />
-        <button @click="saveEdits">Save</button>
-        <button @click="cancelEdit">Cancel</button>
+      <div v-if="showEditForm">
+        <!-- Use the new EditItemForm component and pass editedItem as a prop -->
+        <edit-item-form :editedItem="editedItem" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
       </div>
     </div>
   </div>
@@ -57,12 +54,14 @@
 
 <script>
 import axios from 'axios';
-import FilterSection from '@/components/FilterSection.vue'; // Adjust the path based on your actual file structure
+import FilterSection from '@/components/FilterSection.vue';
+import EditItemForm from '@/components/EditItemForm.vue';
 import { API_BASE_URL } from '@/config/config';
 
 export default {
   components: {
     FilterSection,
+    EditItemForm
   },
   data() {
     return {
