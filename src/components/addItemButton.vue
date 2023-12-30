@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { API_BASE_URL } from '../config/config'
 import { ref } from 'vue';
 import axios from 'axios';
@@ -36,24 +37,25 @@ const togglePopup = () => {
 const addItem = async () => {
   if (itemName.value.trim() === '') return;
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: itemName.value.trim(),
-      status: false,
-      category: selectedCategory.value,
-    }),
+  const newItem = {
+    name: itemName.value.trim(),
+    status: true,
+    category: selectedCategory.value,
   };
+
   try {
-    const response = await axios.post(API_BASE_URL, requestOptions.body, { headers: requestOptions.headers });
-    itemName.value = '';
+    // Send POST request to server
+    const response = await axios.post(API_BASE_URL, newItem);
+    // Assuming the response data is the new item
+    // Push this new item into the items array for reactivity
+   // items.value.push(response.data);
+    itemName.value = ''; // Resetting the itemName after adding
+    selectedCategory.value = ''; // Resetting the category if needed
+    togglePopup(); // Close the popup after adding
   } catch (error) {
     console.error('Error adding item:', error);
+    // Handle the error appropriately
   }
-  togglePopup();
 };
 </script>
 
