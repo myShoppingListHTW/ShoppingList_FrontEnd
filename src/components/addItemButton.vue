@@ -26,6 +26,9 @@ import { API_BASE_URL } from '../config/config'
 import { ref } from 'vue';
 import axios from 'axios';
 
+
+const emit = defineEmits(['item-added']);
+
 const popupVisible = ref(false);
 const itemName = ref('');
 const selectedCategory = ref('OTHER');
@@ -40,20 +43,21 @@ const addItem = async () => {
 
   const newItem = {
     name: itemName.value.trim(),
-    status: true,
+    empty: true,
     category: selectedCategory.value,
   };
 
   try {
     const response = await axios.post(API_BASE_URL, newItem);
-    //items.value.push(response.data);
     itemName.value = ''; // Resetting the itemName after adding
     selectedCategory.value = ''; // Resetting the category if needed
     togglePopup(); // Close the popup after adding
   } catch (error) {
     console.error('Error adding item:', error);
   }
+
 };
+
 </script>
 
 <style scoped>
