@@ -48,8 +48,6 @@
 
       <div v-if="showEditForm">
         <edit-item-form :editedItem="editedItem" :categories="categories" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
-        <add-item-button @item-added="handleNewItem"></add-item-button>
-
       </div>
     </div>
   </div>
@@ -60,7 +58,7 @@ import axios from 'axios';
 import FilterSection from '@/components/FilterSection.vue';
 import EditItemForm from '@/components/EditItemForm.vue';
 import { API_BASE_URL } from '@/config/config';
-import addItemButton from '@/components/addItemButton.vue';
+
 export default {
   components: {
     FilterSection,
@@ -172,8 +170,6 @@ export default {
         })
         .catch(error => console.error('Error updating item status:', error));
     },
-
-
   },
 };
 </script>
