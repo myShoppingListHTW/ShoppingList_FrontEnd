@@ -59,4 +59,3 @@ export default {
 
 /* Add more styles as needed */
 </style>
-

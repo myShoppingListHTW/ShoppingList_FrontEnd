@@ -1,3 +1,5 @@
+<!-- ShoppingListView.vue -->
+
 <template>
   <div>
     <h1 class="text-center mt-3 mb-4">My Shopping List</h1>

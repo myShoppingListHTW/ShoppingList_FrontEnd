@@ -1,3 +1,4 @@
+<!-- addItemButton.vue -->
 
 <template>
   <div>
@@ -44,17 +45,13 @@ const addItem = async () => {
   };
 
   try {
-    // Send POST request to server
     const response = await axios.post(API_BASE_URL, newItem);
-    // Assuming the response data is the new item
-    // Push this new item into the items array for reactivity
-   // items.value.push(response.data);
+    //items.value.push(response.data);
     itemName.value = ''; // Resetting the itemName after adding
     selectedCategory.value = ''; // Resetting the category if needed
     togglePopup(); // Close the popup after adding
   } catch (error) {
     console.error('Error adding item:', error);
-    // Handle the error appropriately
   }
 };
 </script>

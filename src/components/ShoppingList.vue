@@ -1,3 +1,5 @@
+<!-- ShoppingList.vue -->
+
 <template>
   <div>
     <FilterSection
@@ -45,8 +47,7 @@
       </table>
 
       <div v-if="showEditForm">
-        <!-- Use the new EditItemForm component and pass editedItem as a prop -->
-        <edit-item-form :editedItem="editedItem" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
+        <edit-item-form :editedItem="editedItem" :categories="categories" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
       </div>
     </div>
   </div>
@@ -69,7 +70,7 @@ export default {
       allItems: [],
       editedItem: null,
       showEditForm: false,
-      selectedFilterCategory: '', // For filtering items
+      selectedFilterCategory: '',
       categories: ['FRUIT', 'VEGETABLE', 'MEAT', 'FISH', 'DAIRY', 'BAKERY', 'SWEETS', 'DRINKS', 'ALCOHOL', 'OTHER'],
     };
   },
@@ -90,7 +91,7 @@ export default {
       try {
         const response = await axios.get(API_BASE_URL);
         this.items = response.data.map((item) => ({ ...item, empty: item.empty !== false }));
-        this.allItems = [...this.items]; // Populate allItems after fetching data
+        this.allItems = [...this.items];
         this.sortItems();
       } catch (error) {
         console.error('Error fetching items:', error);
@@ -129,37 +130,45 @@ export default {
       this.editedItem = { ...this.items[index] };
       this.showEditForm = true;
     },
-    saveEdits() {
-      const index = this.items.findIndex((item) => item.id === this.editedItem.id);
+    saveEdits(updatedItem) {
+      const index = this.items.findIndex(item => item.id === updatedItem.id);
       if (index !== -1) {
-        this.items.splice(index, 1, this.editedItem);
-        this.updateItemOnServer(this.editedItem);
+        this.items.splice(index, 1, updatedItem);
+        this.updateItemOnServer(updatedItem);
       }
       this.showEditForm = false;
       this.editedItem = null;
     },
+
     updateItemOnServer(item) {
-      axios
-        .put(`${API_BASE_URL}/items/${item.id}`, item)
-        .then((response) => {
-          const index = this.items.findIndex((i) => i.id === item.id);
+      axios.put(`${API_BASE_URL}/${item.id}`, item)
+        .then(response => {
+          const index = this.items.findIndex(i => i.id === item.id);
           if (index !== -1) {
             this.items.splice(index, 1, response.data);
           }
         })
-        .catch((error) => console.error('Error updating item:', error));
+        .catch(error => console.error('Error updating item:', error));
     },
     cancelEdit() {
       this.editedItem = null;
       this.showEditForm = false;
     },
     updateStatus(index) {
-      const item = this.items[index];
-      item.empty = !item.empty; // Toggle the status
+      const itemId = this.items[index].id;
+      const newStatus = !this.items[index].empty;
 
-      this.updateItemOnServer(item);
+      const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: this.items[index].name, empty: newStatus, category: this.items[index].category }),
+      };
 
-      this.items.splice(index, 1, { ...item });
+      axios.put(`${API_BASE_URL}/${itemId}`, requestOptions.body, { headers: requestOptions.headers })
+        .then(response => {
+          this.items.splice(index, 1, response.data);
+        })
+        .catch(error => console.error('Error updating item status:', error));
     },
   },
 };
