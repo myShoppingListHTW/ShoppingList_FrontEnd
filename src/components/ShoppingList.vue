@@ -175,32 +175,32 @@ export default {
 </script>
 <style scoped>
 
-.edit-form {
-  padding: 20px;
-  border: 1px solid #ddd;
-  margin-top: 20px;
-  background-color: #f8f9fa;
-  border-radius: 5px;
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Removes space between table cells */
 }
 
 .table th,
 .table td {
   text-align: center;
   vertical-align: middle;
+  padding: 10px; /* Adjust padding as needed */
+  border-bottom: 1px solid #666; /* Adds a subtle border to table rows */
 }
 
 .table th {
-  background-color: #343a40;
-  color: #ffffff;
-}
+  background-color: #000; /* Black background for table headers */
+  color: #fff; /* White text color for contrast */}
 
-.table td:nth-child(2) {
-  font-weight: bold;
-}
+  .table td {
+    background-color: #333; /* Dark background for table cells */
+    color: #fff; /* White text color for contrast */
+  }
 
-.table-hover tbody tr:hover {
-  background-color: #4e5d6c;
-}
+
+  .table-hover tbody tr:hover {
+    background-color: #444; /* Slightly lighter background on row hover */
+  }
 
 .form-check-input {
   margin-top: 0.3rem;
