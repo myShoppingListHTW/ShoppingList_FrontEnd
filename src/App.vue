@@ -9,7 +9,7 @@
 
 <script>
 import DarkModeSwitch from '../src/components/modeSwitcher.vue';
-import ShoppingList from '../src/Views/ShoppingListView.vue';
+import ShoppingList from './Views/ShoppingListView.vue';
 
 export default {
   name: 'App',

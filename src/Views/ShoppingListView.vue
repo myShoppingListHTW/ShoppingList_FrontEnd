@@ -4,14 +4,15 @@
   <div>
     <h1 class="text-center mt-3 mb-4">My Shopping List</h1>
     <div class="shopping-list-container">
-      <ShoppingList :items="shoppingItems" />
-    </div>
-    <addItemButton @addItem="addItem" />
+        <ShoppingList :items="shoppingItems" />
+        <addItemButton @addItem="addItem" />
 
   </div>
+  </div>>
 </template>
 
 <script setup lang="ts">
+
 import ShoppingList from "../components/ShoppingList.vue";
 import addItemButton from "../components/addItemButton.vue";
 import { ref } from 'vue';

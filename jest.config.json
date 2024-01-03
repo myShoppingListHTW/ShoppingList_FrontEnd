@@ -1,0 +1,22 @@
+
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "vue",
+    "tsx",
+    "ts"
+  ],
+  "transform": {
+    ".*\\.(vue)$":"vue/vue3-jest",
+    ".*\\.(js)$": "babel-jest"
+  },
+  "collectCoverage": true,
+  "collectCoverageFrom": ["**/*.{js,vue}", "!**/node_modules/**"],
+  "testMatch": ["**/__tests__/**/*.(js|jsx|ts|tsx)", "**/?(*.)(spec|test).(js|jsx|ts|tsx)"],
+
+    "moduleNameMapper": {
+        "^@/(.*)$": "<rootDir>/src/$1"
+    }
+
+}
