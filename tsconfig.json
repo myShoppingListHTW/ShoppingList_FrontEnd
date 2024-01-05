@@ -4,7 +4,9 @@
     "strict": true,
     "experimentalDecorators": true,
       "target": "esnext",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+
   },
   "files": [],
   "references": [
