@@ -1,7 +1,9 @@
 /**
- * @fileoverview Unit tests for the addItemButton.vue component.
+ * @file addItem.spec.js
+ * @description Unit tests for the addItemButton.vue component.
  * Tests the functionality of adding an item through the component's form.
  *
+ * @author Rita Chiblaq
  */
 
 import { shallowMount } from '@vue/test-utils';
