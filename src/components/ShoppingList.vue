@@ -1,6 +1,7 @@
 <!-- ShoppingList.vue -->
 
 <template>
+  <ShareItemsList :items="items" />
   <div>
     <FilterSection
       :selectedFilterCategory="selectedFilterCategory"
@@ -58,9 +59,11 @@ import axios from 'axios';
 import FilterSection from '@/components/FilterSection.vue';
 import EditItemForm from '@/components/EditItemForm.vue';
 import { API_BASE_URL } from '@/config/config';
+import ShareItemsList from '@/components/ShareItemList.vue';
 
 export default {
   components: {
+    ShareItemsList,
     FilterSection,
     EditItemForm
   },
@@ -78,6 +81,7 @@ export default {
     this.fetchItems();
   },
   methods: {
+
     updateSelectedFilterCategory(category) {
       this.selectedFilterCategory = category;
       this.applyFilter();

@@ -48,3 +48,6 @@ describe('EditItemForm.vue', () => {
     expect(wrapper.emitted('save-edits')[0][0]).toEqual({ name: 'Old Item', category: 'VEGETABLE' });
   });
 });
+
+
+
