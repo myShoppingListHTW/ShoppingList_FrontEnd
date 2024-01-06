@@ -1,5 +1,4 @@
 <!-- Home.vue -->
-
 <template>
   <div>
     <h2 class="text-center mt-3 mb-4">Shopping Lists</h2>

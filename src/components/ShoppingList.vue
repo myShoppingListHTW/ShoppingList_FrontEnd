@@ -86,7 +86,6 @@ export default {
       this.selectedFilterCategory = '';
       this.applyFilter();
     },
-
     async fetchItems() {
       try {
         const response = await axios.get(API_BASE_URL);
@@ -172,6 +171,7 @@ export default {
     },
   },
 };
+
 </script>
 <style scoped>
 

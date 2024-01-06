@@ -2,18 +2,23 @@
 
 <template>
   <div>
-    <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
-    <ShoppingList />
+    <DarkModeSwitch @toggleDarkMode="toggleDarkMode"/>
+    <ShoppingListView/>
+    <!--home/-->
   </div>
 </template>
 
 <script>
 import DarkModeSwitch from '../src/components/modeSwitcher.vue';
 import ShoppingList from './Views/ShoppingListView.vue';
+import ShoppingListView from '@/Views/ShoppingListView.vue'
+import Home from '@/components/Home.vue'
 
 export default {
   name: 'App',
   components: {
+    Home,
+    ShoppingListView,
     DarkModeSwitch,
     ShoppingList
   },

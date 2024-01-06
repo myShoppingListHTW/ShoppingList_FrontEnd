@@ -3,16 +3,15 @@
   <div class="edit-popup">
     <div class="edit-form">
       <h3>Edit Item</h3>
-      <input v-model="editedItem.name" placeholder="Item Name" />
-
+      <input type="text" id="itemName" v-model="editedItem.name" required placeholder="Item Name" maxlength="20" minlength="2" autocomplete="on"/>
       <select v-model="editedItem.category">
         <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
       </select>
       <div class="button-group">
-      <button @click="saveEdits">Save</button>
-      <button @click="cancelEdit">Cancel</button>
+        <button class="create-item-button" @click="saveEdits">Save</button>
+        <button @click="cancelEdit">Cancel</button>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -36,25 +35,24 @@ export default {
 <style scoped>
 .edit-popup {
   position: fixed;
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #343a3f; /* Dark background */
+  background-color: #343a3f;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  z-index: 1001; /* Above other content */
+  z-index: 1001;
   padding: 20px;
-  width: 300px; /* Fixed width, adjust as needed */
+  width: 300px;
 }
 
 .edit-form {
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  align-items: stretch; /* Stretch elements to fill width */
+  flex-direction: column;
+  align-items: stretch;
   padding: 20px;
-  background-color: #f8f9fa; /* Light background for the form */
   border-radius: 5px;
-  border: 1px solid #ddd;
+  color: #fff; /* Set text color to white */
 }
 
 input, select {
@@ -66,18 +64,18 @@ input, select {
 
 .button-group {
   display: flex;
-  justify-content: space-between; /* Space out buttons */
+  justify-content: space-between;
 }
 
 button {
   background-color: #4caf50;
   color: #fff;
   cursor: pointer;
-  padding: 10px 20px; /* Adjust padding for buttons */
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  flex: 1; /* Make buttons take equal width */
-  margin: 0 5px; /* Space between buttons */
+  flex: 1;
+  margin: 0 5px;
+
 }
 </style>
-
