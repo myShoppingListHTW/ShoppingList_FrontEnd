@@ -1,6 +1,8 @@
 <template>
   <div class="share-items-container">
-    <button @click="shareShoppingList" class="share-button">share shopping list</button>
+    <button @click="shareShoppingList" class="share-button">
+      <font-awesome-icon icon="fa-solid fa-copy"></font-awesome-icon>
+    </button>
   </div>
 </template>
 
@@ -32,11 +34,17 @@ export default {
 </script>
 
 <style scoped>
-.share-items-container {
-  margin-top: 20px;
+.share-button {
+  background-color: transparent; /* or any other contrasting color */
+  border: none;
+  cursor: pointer;
+  font-size: 24px; /* Adjust as necessary */
+  color: #000; /* Ensure this color stands out against your background */
 }
 
-.share-button {
-  margin-bottom: 10px;
-}
+/* Additional styling for hover effect */
+
+
+
+
 </style>

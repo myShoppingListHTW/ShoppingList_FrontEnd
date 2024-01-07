@@ -6,15 +6,22 @@ import mitt from 'mitt';
 import App from './App.vue';
 import { createApp } from 'vue';
 import router from './router';
-//import {createPinia} from 'pinia';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+
 
 const emitter = mitt();
 const app = createApp(App);
-//app.use(createPinia());
 
 // Use the Mitt emitter as a global property
 app.config.globalProperties.emitter = emitter;
 
 app.use(router);
+library.add(faCopy);
+library.add(faUserSecret);
+app.component('font-awesome-icon', FontAwesomeIcon);
+
 
 app.mount('#app');

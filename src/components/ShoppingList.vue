@@ -1,14 +1,23 @@
 <!-- ShoppingList.vue -->
 
 <template>
-  <ShareItemsList :items="items" />
-  <div>
-    <FilterSection
-      :selectedFilterCategory="selectedFilterCategory"
-      :categories="categories"
-      @update:selectedFilterCategory="updateSelectedFilterCategory"
-      @update:deleteSelectedFilter="deleteSelectedFilter"
-    />
+  <div class="controls-container">
+    <div class="share-items-container">
+      <!-- Share button -->
+      <ShareItemsList :items="items" />
+    </div>
+
+    <div class="filter-section">
+      <!-- Filter select and options -->
+      <FilterSection
+        :selectedFilterCategory="selectedFilterCategory"
+        :categories="categories"
+        @update:selectedFilterCategory="updateSelectedFilterCategory"
+        @update:deleteSelectedFilter="deleteSelectedFilter"
+      />
+    </div>
+
+  </div>
 
     <div>
       <table class="table table-responsive table-borderless table-hover table-responsive-lg">
@@ -51,7 +60,6 @@
         <edit-item-form :editedItem="editedItem" :categories="categories" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -229,6 +237,12 @@ export default {
 
 .checkbox-col {
   width: 20px;
+}
+.controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* Adjust as needed */
 }
 
 
