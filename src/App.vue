@@ -4,7 +4,6 @@
   <div>
     <DarkModeSwitch @toggleDarkMode="toggleDarkMode"/>
     <ShoppingListView/>
-    <!--home/-->
   </div>
 </template>
 

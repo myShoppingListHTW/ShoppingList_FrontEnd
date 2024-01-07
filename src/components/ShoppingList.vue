@@ -197,7 +197,7 @@ export default {
   color: #fff; /* White text color for contrast */}
 
   .table td {
-    background-color: #333; /* Dark background for table cells */
+    background-color: #000; /* Dark background for table cells */
     color: #fff; /* White text color for contrast */
   }
 
@@ -230,14 +230,6 @@ export default {
 .checkbox-col {
   width: 20px;
 }
-.filter-section >>> .filter-dropdown {
-  margin-right: 10px;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
-  background-color: #f8f9fa;
-  vertical-align: middle;;
-}
+
 
 </style>
