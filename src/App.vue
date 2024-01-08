@@ -19,7 +19,6 @@ export default {
     Home,
     ShoppingListView,
     DarkModeSwitch,
-    ShoppingList
   },
   data() {
     return {

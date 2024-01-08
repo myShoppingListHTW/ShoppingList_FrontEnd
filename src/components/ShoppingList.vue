@@ -3,12 +3,10 @@
 <template>
   <div class="controls-container">
     <div class="share-items-container">
-      <!-- Share button -->
       <ShareItemsList :items="items" />
     </div>
 
     <div class="filter-section">
-      <!-- Filter select and options -->
       <FilterSection
         :selectedFilterCategory="selectedFilterCategory"
         :categories="categories"
@@ -19,8 +17,8 @@
 
   </div>
 
-    <div>
-      <table class="table table-responsive table-borderless table-hover table-responsive-lg">
+    <div class ="table-scroll-container" >
+      <table class=" table table-responsive table-borderless table-hover table-responsive-lg">
         <thead>
         <tr>
           <th scope="col" class="checkbox-col sticky-header"></th>
@@ -187,43 +185,38 @@ export default {
 </script>
 <style scoped>
 
+
+
 .table {
   width: 100%;
-  border-collapse: collapse; /* Removes space between table cells */
+  border-collapse: collapse;
 }
 
 .table th,
 .table td {
   text-align: center;
   vertical-align: middle;
-  padding: 10px; /* Adjust padding as needed */
-  border-bottom: 1px solid #666; /* Adds a subtle border to table rows */
+  padding: 10px;
+  border-bottom: 1px solid #666;
 }
 
 .table th {
-  background-color: #000; /* Black background for table headers */
-  color: #fff; /* White text color for contrast */}
+  background-color: #000;
+  color: #fff;
+}
 
   .table td {
-    background-color: #000; /* Dark background for table cells */
-    color: #fff; /* White text color for contrast */
+    background-color: #000;
+    color: #fff;
   }
 
 
   .table-hover tbody tr:hover {
-    background-color: #444; /* Slightly lighter background on row hover */
+    background-color: #444;
   }
 
 .form-check-input {
   margin-top: 0.3rem;
-}
-
-.sticky-header {
-  position: sticky;
-  top: 0;
-  background-color: #343a40;
-  color: #ffffff;
-  z-index: 1;
 }
 
 .btn-sm {
@@ -242,8 +235,23 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px; /* Adjust as needed */
+  margin-bottom: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: white;
 }
 
+.table th.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+}
+
+.table-scroll-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
 
 </style>

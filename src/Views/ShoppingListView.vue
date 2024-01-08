@@ -46,4 +46,13 @@ const addItem = (item: ShoppingItem) => {
     max-width: 90%; /* Adjust width for smaller screens */
   }
 }
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: white; /* or any color that fits your design */
+  z-index: 100;
+  padding: 10px 0; /* Optional: for some spacing */
+}
+
+
 </style>
