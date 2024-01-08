@@ -2,18 +2,18 @@
 
 <template>
   <div>
-
+      <Cards/>
     <div class="shopping-list-container">
         <ShoppingList :items="shoppingItems" />
-  </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 
-import ShoppingList from "../components/ShoppingList.vue";
-import addItemButton from "../components/addItemButton.vue";
 import { ref } from 'vue';
+import Cards from '@/components/Cards.vue'
+import ShoppingList from '@/components/ShoppingList.vue'
 
 const shoppingItems = ref([]);
 

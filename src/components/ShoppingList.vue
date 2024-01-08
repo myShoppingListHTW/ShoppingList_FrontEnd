@@ -1,15 +1,12 @@
-<!-- ShoppingList.vue -->
-
 <template>
-  <ShareItemsList :items="items" />
   <div>
+    <ShareItemsList :items="items" />
     <FilterSection
       :selectedFilterCategory="selectedFilterCategory"
       :categories="categories"
       @update:selectedFilterCategory="updateSelectedFilterCategory"
       @update:deleteSelectedFilter="deleteSelectedFilter"
     />
-
     <div>
       <table class="table table-responsive table-borderless table-hover table-responsive-lg">
         <thead>
@@ -23,162 +20,110 @@
         </thead>
         <tbody>
         <tr v-for="(item, index) in items" :key="index" :class="{ 'table-success': !item.empty }">
-          <td class="checkbox-col">
-            <div class="form-check">
-              <input type="checkbox" :checked="!item.empty" @change="updateStatus(index)" class="form-check-input" />
-            </div>
-          </td>
-          <td>
-            <span :class="{ 'line-through': !item.empty }">{{ item.name }}</span>
-          </td>
-          <td>
-            <div :class="{ 'text-success': !item.empty, 'text-danger': item.empty }">
-              {{ item.empty ? 'Empty' : 'Filled' }}
-            </div>
-          </td>
-          <td>
-            <div>{{ item.category || 'NO CAT*' }}</div>
-          </td>
-          <td class="text-center">
-            <button @click="editItem(index)" class="btn btn-primary btn-sm">✎</button>
-            <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2">✖</button>
-          </td>
-        </tr>
+            <td class="checkbox-col">
+              <div class="form-check">
+                <input type="checkbox" :checked="!item.empty" @change="updateStatus(index)" class="form-check-input" />
+              </div>
+            </td>
+            <td>
+              <span :class="{ 'line-through': !item.empty }">{{ item.name }}</span>
+            </td>
+            <td>
+              <div :class="{ 'text-success': !item.empty, 'text-danger': item.empty }">
+                {{ item.empty ? 'Empty' : 'Filled' }}
+              </div>
+            </td>
+            <td>
+              <div>{{ item.category || 'NO CAT*' }}</div>
+            </td>
+            <td class="text-center">
+              <button @click="editItem(index)" class="btn btn-primary btn-sm">✎</button>
+              <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2">✖</button>
+            </td>
+          </tr>
         </tbody>
       </table>
-
       <div v-if="showEditForm">
         <edit-item-form :editedItem="editedItem" :categories="categories" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
       </div>
     </div>
+    <add-item-button />
   </div>
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import FilterSection from '@/components/FilterSection.vue';
 import EditItemForm from '@/components/EditItemForm.vue';
 import { API_BASE_URL } from '@/config/config';
 import ShareItemsList from '@/components/ShareItemList.vue';
+import AddItemButton from '@/components/addItemButton.vue';
+import { useAuth } from '@okta/okta-vue';
+
+const $auth = useAuth();
 
 export default {
   components: {
+    AddItemButton,
     ShareItemsList,
     FilterSection,
-    EditItemForm
+    EditItemForm,
   },
-  data() {
-    return {
-      items: [],
-      allItems: [],
-      editedItem: null,
-      showEditForm: false,
-      selectedFilterCategory: '',
-      categories: ['FRUIT', 'VEGETABLE', 'MEAT', 'FISH', 'DAIRY', 'BAKERY', 'SWEETS', 'DRINKS', 'ALCOHOL', 'OTHER'],
-    };
-  },
-  mounted() {
-    this.fetchItems();
-  },
-  methods: {
+  setup() {
+    const items = ref([]);
+    const allItems = ref([]);
+    const ownersItems = ref([]);
+    const editedItem = ref(null);
+    const showEditForm = ref(false);
+    const selectedFilterCategory = ref('');
+    const categories = ref(['FRUIT', 'VEGETABLE', 'MEAT', 'FISH', 'DAIRY', 'BAKERY', 'SWEETS', 'DRINKS', 'ALCOHOL', 'OTHER']);
+    // Added isAuthenticated to track if authentication is completed
+    const isAuthenticated = ref(false);
 
-    updateSelectedFilterCategory(category) {
-      this.selectedFilterCategory = category;
-      this.applyFilter();
-    },
-    deleteSelectedFilter() {
-      this.selectedFilterCategory = '';
-      this.applyFilter();
-    },
-    async fetchItems() {
+    const fetchItems = async () => {
       try {
-        const response = await axios.get(API_BASE_URL);
-        this.items = response.data.map((item) => ({ ...item, empty: item.empty !== false }));
-        this.allItems = [...this.items];
-        this.sortItems();
+        // Check if authentication is completed
+        if ($auth.user && $auth.user.value) {
+          const endpoint = API_BASE_URL + '?owner=' + $auth.user.value.email;
+          const response = await axios.get(endpoint);
+          items.value = response.data.map((item) => ({
+            ...item,
+            empty: item.empty !== false,
+          }));
+          allItems.value = [...items.value];
+          sortItems();
+        } else {
+          console.error('User is not defined.');
+        }
       } catch (error) {
         console.error('Error fetching items:', error);
       }
-    },
+    };
 
-    applyFilter() {
-      if (this.selectedFilterCategory) {
-        this.items = this.allItems.filter((item) => item.category === this.selectedFilterCategory);
-      } else {
-        this.items = [...this.allItems];
-      }
-      this.sortItems();
-    },
-    sortItems() {
-      this.items.sort((a, b) => {
-        if (a.empty && !b.empty) return -1;
-        if (!a.empty && b.empty) return 1;
-        return a.name.localeCompare(b.name);
-      });
-    },
-    deleteItem(index) {
-      const itemId = this.items[index].id;
-      axios
-        .delete(`${API_BASE_URL}/${itemId}`)
-        .then((response) => {
-          if (response.status === 200) {
-            this.items.splice(index, 1);
-          } else {
-            console.error('Failed to delete item');
-          }
-        })
-        .catch((error) => console.error('Error deleting item:', error));
-    },
-    editItem(index) {
-      this.editedItem = { ...this.items[index] };
-      this.showEditForm = true;
-    },
-    saveEdits(updatedItem) {
-      const index = this.items.findIndex(item => item.id === updatedItem.id);
-      if (index !== -1) {
-        this.items.splice(index, 1, updatedItem);
-        this.updateItemOnServer(updatedItem);
-      }
-      this.showEditForm = false;
-      this.editedItem = null;
-    },
+    // ... (other functions)
 
-    updateItemOnServer(item) {
-      axios.put(`${API_BASE_URL}/${item.id}`, item)
-        .then(response => {
-          const index = this.items.findIndex(i => i.id === item.id);
-          if (index !== -1) {
-            this.items.splice(index, 1, response.data);
-          }
-        })
-        .catch(error => console.error('Error updating item:', error));
-    },
-    cancelEdit() {
-      this.editedItem = null;
-      this.showEditForm = false;
-    },
-    updateStatus(index) {
-      const itemId = this.items[index].id;
-      const newStatus = !this.items[index].empty;
+    onMounted(async () => {
+      // Wait for authentication to complete
+      await $auth.isAuthenticated();
+      isAuthenticated.value = true;
+      fetchItems();
+    });
 
-      const requestOptions = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: this.items[index].name, empty: newStatus, category: this.items[index].category }),
-      };
-
-      axios.put(`${API_BASE_URL}/${itemId}`, requestOptions.body, { headers: requestOptions.headers })
-        .then(response => {
-          this.items.splice(index, 1, response.data);
-        })
-        .catch(error => console.error('Error updating item status:', error));
-    },
+    return {
+      items,
+      allItems,
+      ownersItems,
+      editedItem,
+      showEditForm,
+      selectedFilterCategory,
+      categories,
+      fetchItems
+    };
   },
 };
-
 </script>
 <style scoped>
-
 .table {
   width: 100%;
   border-collapse: collapse; /* Removes space between table cells */

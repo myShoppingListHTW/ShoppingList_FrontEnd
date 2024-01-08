@@ -9,7 +9,7 @@ async function checkAvailability(url: string): Promise<boolean> {
   }
 }
 
-const localEndpoint = 'http://localhost:8080/api/v1/article';
+const localEndpoint = 'http://localhost:8080/api/v1/article/';
 const herokuEndpoint = 'https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article';
 
 const localAvailable = await checkAvailability(localEndpoint);

@@ -1,59 +1,67 @@
-<!-- App.vue -->
-
 <template>
   <div>
     <DarkModeSwitch @toggleDarkMode="toggleDarkMode"/>
-    <ShoppingListView/>
-    <!--home/-->
+    <div id="nav">
+      <RouterLink to="/ShoppingList">List</RouterLink> |
+      <RouterLink to="/login" v-if="!authenticated">Login</RouterLink> |
+      <RouterLink to="/profile" v-if="authenticated">Profile</RouterLink> |
+      <a v-if="authenticated" v-on:click="logout()">Logout</a> |
+      <RouterLink to="/ShoppingList" v-if="authenticated">ShoppingList</RouterLink> |
+      <RouterLink to="/newList" v-if="authenticated">New List</RouterLink>
+    </div>
+    <RouterView/>
   </div>
 </template>
 
-<script>
+<script setup>
+import { RouterLink, RouterView, useRoute } from 'vue-router'
+import { watch, onMounted, ref } from 'vue'
+import { useAuth } from '@okta/okta-vue'
+
+const $auth = useAuth()
+const $route = useRoute()
+const authenticated = ref(false)
+
+async function logout() {
+  await $auth.signOut()
+}
+
+async function isAuthenticated() {
+  authenticated.value = await $auth.isAuthenticated()
+}
+
+watch(() => $route.path, async () => {
+  await isAuthenticated()
+})
+
+onMounted(async () => {
+  await isAuthenticated()
+  $auth.authStateManager.subscribe(isAuthenticated)
+})
 import DarkModeSwitch from '../src/components/modeSwitcher.vue';
-import ShoppingList from './Views/ShoppingListView.vue';
-import ShoppingListView from '@/Views/ShoppingListView.vue'
-import Home from '@/components/Home.vue'
 
-export default {
-  name: 'App',
-  components: {
-    Home,
-    ShoppingListView,
-    DarkModeSwitch,
-    ShoppingList
-  },
-  data() {
-    return {
-      darkMode: false
-    };
-  },
-  watch: {
-    darkMode(newDarkMode) {
-      // Log to console to check if dark mode is being toggled
-      console.log('Dark Mode Toggled:', newDarkMode);
+const darkMode = ref(false)
 
-      // Apply the dark mode class directly to the body element
-      document.body.classList.toggle('dark-mode', newDarkMode);
-    }
-  },
-  methods: {
-    toggleDarkMode() {
-      this.darkMode = !this.darkMode;
-    }
-  }
+watch(() => darkMode.value, (newDarkMode) => {
+  console.log('Dark Mode Toggled:', newDarkMode);
+
+  document.body.classList.toggle('dark-mode', newDarkMode);
+});
+
+function toggleDarkMode() {
+  darkMode.value = !darkMode.value;
 }
 </script>
 
 <style>
-/* Add your existing styles here */
-/* For example: */
+
 
 body {
   font-family: 'Arial', sans-serif;
 }
 
 .dark-mode {
-  background-color: #2d2d2d; /* Set your desired dark background color */
-  color: #ffffff; /* Set your desired light text color for dark mode */
+  background-color: #2d2d2d;
+  color: #ffffff;
 }
 </style>
