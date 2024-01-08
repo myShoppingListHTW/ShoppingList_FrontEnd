@@ -72,10 +72,7 @@ import { useAuth } from '@okta/okta-vue'
 const email = ref('')
 const $auth = useAuth()
 
-onMounted(async () => {
-  const userClaims = await $auth.getUser()
-  email.value = userClaims.email.toString()
-})
+
 
 export default {
   components: {
@@ -95,10 +92,13 @@ export default {
     };
   },
   mounted() {
-    this.fetchItems();
+    useAuth().getUser().then((user) => {
+      email.value = user.email
+      this.fetchItems(email.value)
+    })
   },
   methods: {
-    async fetchItems(owner = '') {
+    async fetchItems(owner = 'everybody') {
       try {
         const endpoint = API_BASE_URL  + `?owner=${email.value}`;
 
@@ -197,18 +197,7 @@ export default {
         })
         .catch(error => console.error('Error updating item status:', error));
     },
-  },
-  // Example: updateItemOnServer method
-  updateItemOnServer(item) {
-    axios.put(`${API_BASE_URL}/${item.id}`, item)
-      .then(response => {
-        const index = this.items.findIndex(i => i.id === item.id);
-        if (index !== -1) {
-          this.items.splice(index, 1, response.data);
-        }
-      })
-      .catch(error => console.error('Error updating item:', error));
-  },
+  }
 
 };
 </script>
