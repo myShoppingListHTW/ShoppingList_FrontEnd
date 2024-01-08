@@ -3,10 +3,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { LoginCallback, navigationGuard } from '@okta/okta-vue'
 import Login from '../components/Login.vue'
 import Profile from '../components/Profile.vue'
+import { API_BASE_URL } from '../config/config'
 
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(API_BASE_URL),
   routes: [
       {
           path: '/ShoppingList',

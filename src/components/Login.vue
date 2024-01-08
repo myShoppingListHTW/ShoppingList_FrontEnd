@@ -10,11 +10,9 @@ onMounted(() => {
     )
   })
 })
-
 onUnmounted(() => {
   oktaSignIn.remove()
 })
-
 </script>
 
 <template>

@@ -40,6 +40,7 @@ const addItem = async () => {
     name: itemName.value.trim(),
     empty: true,
     category: selectedCategory.value,
+    owner: 'everybody',
   };
 
   try {

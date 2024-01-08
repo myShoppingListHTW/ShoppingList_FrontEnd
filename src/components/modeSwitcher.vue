@@ -1,5 +1,4 @@
 <!-- modeSwitcher.vue -->
-
 <template>
   <label class="dark-mode-switch">
     <input type="checkbox" :checked="darkMode" @change="$emit('toggleDarkMode')" />

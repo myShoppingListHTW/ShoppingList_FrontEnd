@@ -1,12 +1,12 @@
 <!-- ShoppingListView.vue -->
 
 <template>
-  <div>
 
     <div class="shopping-list-container">
+
         <ShoppingList :items="shoppingItems" />
   </div>
-  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -15,34 +15,41 @@ import ShoppingList from "../components/ShoppingList.vue";
 import addItemButton from "../components/addItemButton.vue";
 import { ref } from 'vue';
 
-const shoppingItems = ref([]);
+interface ShoppingItem {
 
-
+  name: string;
+  status: boolean;
+  category: string;
+  id: number
+}
+const shoppingItems = ref<ShoppingItem[]>([]);
+const addItem = (item: ShoppingItem) => {
+  shoppingItems.value.push(item);
+};
 </script>
 
 <style scoped>
-.container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  background-color: #f0f0f0; /* Set your desired light background color */
-  color: #333; /* Set your desired dark text color for light mode */
-}
 
-.dark-mode .container {
-  background-color: #2d2d2d; /* Set your desired dark background color */
-  color: #ffffff; /* Set your desired light text color for dark mode */
-}
+
+
 .shopping-list-container {
-  max-height: 500px; /* Adjust the maximum height as needed */
-  overflow: auto;
-  border: 1px ;
-  /* Border style for the table container */
-}
+  max-width: 800px; /* Maximum width of the shopping list */
+  margin: auto; /* Centers the content horizontally */
+  overflow: auto; /* Keeps the content scrollable */
 
+}
 @media screen and (max-width: 600px) {
-  .container {
-    max-width: 90%;
+  .shopping-list-container {
+    max-width: 90%; /* Adjust width for smaller screens */
   }
 }
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: white; /* or any color that fits your design */
+  z-index: 100;
+  padding: 10px 0; /* Optional: for some spacing */
+}
+
+
 </style>

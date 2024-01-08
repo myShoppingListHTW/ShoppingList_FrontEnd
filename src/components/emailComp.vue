@@ -2,7 +2,8 @@
 import { onMounted, ref } from 'vue'
 import { useAuth } from '@okta/okta-vue'
 import type { CustomUserClaim } from '@okta/okta-auth-js'
-
+const email = ref('')
+const $auth = useAuth()
 
 onMounted(async () => {
   const userClaims = await $auth.getUser()
