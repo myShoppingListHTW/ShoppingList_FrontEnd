@@ -1,4 +1,5 @@
 <template>
+  <div class="list-group-horizontal-xxl">
   <div class="controls-container">
     <div class="share-items-container">
       <ShareItemsList :items="items" />
@@ -51,17 +52,18 @@
       </tr>
       </tbody>
     </table>
-
     <div v-if="showEditForm">
       <edit-item-form :editedItem="editedItem" :categories="categories" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
     </div>
     <div v-if="showAddItemForm">
       <add-item-button :newItem="newItem" :categories="categories" @save-item="saveItem" @cancel-adding-item="cancelAddingItem" />
     </div>
-<footer class="button">
-    <button class="create-item-button" @click="addItem()">Create Item</button>
-</footer>
   </div>
+    <div>
+  <section class="button">
+    <button class="create-item-button" @click="addItem()">Create Item</button>
+    </section>
+    </div>  </div>
 </template>
 
 <script>
@@ -207,10 +209,12 @@ export default {
         .catch(error => console.error('Error updating item status:', error));
     },
     saveItem(newItem){
+      newItem.owner = email.value;
       axios.post(API_BASE_URL, newItem)
         .then(response => {
           this.items.push(response.data);
-
+          this.showAddItemForm = false;
+          this.fetchItems(email.value);
         })
         .catch(error => console.error('Error adding new item:', error));
     },
@@ -288,6 +292,17 @@ export default {
 
 }
 
+.create-item-button {
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  flex: 1;
+  margin: 0 5px;
+
+}
 .table-scroll-container {
   max-height: 400px;
   overflow-y: auto;
