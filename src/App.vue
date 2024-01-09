@@ -1,9 +1,12 @@
 <template>
-  <div>
-    <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
-    <Header />
-    <RouterView/>
-    <ShoppingListView/>
+  <div class="App">
+    <nav>
+      <Header/>
+    </nav>
+    <router-view/>
+    <footer>
+      <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
+    </footer>
   </div>
 </template>
 
@@ -13,12 +16,10 @@ import { watch, onMounted, ref } from 'vue'
 import { useAuth } from '@okta/okta-vue'
 import DarkModeSwitch from '../src/components/modeSwitcher.vue';
 import Header from '@/components/Header.vue'
-
 const $auth = useAuth()
 const $route = useRoute()
 const authenticated = ref(false)
 const darkMode = ref(false)
-
 const toggleDarkMode = () => {
   darkMode.value = !darkMode.value;
 }
@@ -55,4 +56,5 @@ body {
   background-color: #2d2d2d;
   color: #ffffff;
 }
+
 </style>

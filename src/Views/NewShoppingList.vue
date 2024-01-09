@@ -11,8 +11,6 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
-import Cards from '@/components/Cards.vue'
-import ShoppingList from '@/components/ShoppingList.vue'
 import Header from '@/components/Header.vue'
 
 const shoppingItems = ref([]);

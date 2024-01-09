@@ -1,7 +1,6 @@
 //index.ts
 import { createRouter, createWebHistory } from 'vue-router'
 import { LoginCallback, navigationGuard } from '@okta/okta-vue'
-import Login from '../components/Login.vue'
 import Profile from '../components/Profile.vue'
 import newList from '../Views/NewShoppingList.vue'
 
@@ -17,14 +16,10 @@ const router = createRouter({
       path: '/ShoppingList',
       name: 'ShoppingList',
       component: () => import('../components/ShoppingList.vue'),
-    },{
-      path: '/newList',
-      component: newList
     },
-
     {
       path: '/login',
-      component: Login
+      component: () => import('../components/Login.vue')
     },
     {
       path: '/login/callback',
