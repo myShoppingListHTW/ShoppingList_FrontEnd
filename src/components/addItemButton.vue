@@ -5,28 +5,24 @@
     <button class="create-item-button" @click="togglePopup">Create Item</button>
     <div v-if="popupVisible" class="popup">
       <form @submit.prevent="addItem">
-        <input type="text" id="itemName" v-model="newItem.name"
-               required placeholder="Item Name" maxlength="20" minlength="2"
-               autocomplete="on"/>
-        <select v-model="newItem.category">
-          <option v-for="category in categories" :key="category"
-                  :value="category">{{ category }}</option>
+        <input type="text" id="itemName" v-model="itemName" required placeholder="Item Name" maxlength="20" minlength="2" autocomplete="on"/>
+        <select id="category" v-model="selectedCategory">
+          <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
         </select>
         <div class="button-group">
-          <button class="create-item-button" @click="saveItem">Save</button>
-          <button @click="cancelAdd">Cancel</button>
+          <button type="submit">Add Item</button>
+          <button @click="togglePopup">Cancel</button>
         </div>
       </form>
     </div>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 
 import { API_BASE_URL } from '../config/config'
 import { ref } from 'vue';
 import axios from 'axios';
-
 
 const popupVisible = ref(false);
 const itemName = ref('');
@@ -57,22 +53,6 @@ const addItem = async () => {
     console.error('Error adding item:', error);
   }
 };
-
-export default {
-  props: {
-    newItem: Object,
-    categories: Array
-  },
-  methods: {
-    saveItem() {
-      this.$emit('save-item', this.newItem);
-    },
-    cancelAdd() {
-      this.$emit('cancel-add');
-    },
-  },
-};
-
 </script>
 
 

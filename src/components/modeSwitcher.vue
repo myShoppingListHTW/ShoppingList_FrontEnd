@@ -1,4 +1,3 @@
-<!-- modeSwitcher.vue -->
 <template>
   <label class="dark-mode-switch">
     <input type="checkbox" :checked="darkMode" @change="$emit('toggleDarkMode')" />
@@ -14,19 +13,17 @@ export default {
 <style scoped>
 .dark-mode-switch {
   position: fixed;
-  top: 20px;
+  top: 95%;
   right: 20px;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
-
 .dark-mode-switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-
 .slider {
   position: absolute;
   cursor: pointer;
@@ -39,7 +36,6 @@ export default {
   transition: .4s;
   border-radius: 34px;
 }
-
 .slider:before {
   position: absolute;
   content: "";
@@ -52,11 +48,9 @@ export default {
   transition: .4s;
   border-radius: 50%;
 }
-
 input:checked + .slider {
   background-color: #4caf50; /* Set your desired background color for the switch when dark mode is on */
 }
-
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);

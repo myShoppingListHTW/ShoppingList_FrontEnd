@@ -12,7 +12,9 @@
       <li v-if="authenticated">
         <router-link to="/ShoppingList" class="nav-link px-2 link-primary">My List</router-link>
       </li>
-
+      <li v-if="!authenticated">
+        <p class="col-lg-10 fst-4">Welcome to My HTW Shopping</p>
+      </li>
       <li v-if="authenticated">
         <router-link to="/profile" class="nav-link px-2 link-primary">Profile</router-link>
       </li>
@@ -39,7 +41,6 @@
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { watch, onMounted, ref } from 'vue'
 import { useAuth } from '@okta/okta-vue'
-import groceries from '@/assets/groceries.png'
 import DarkModeSwitch from '@/components/modeSwitcher.vue'
 
 const $auth = useAuth()

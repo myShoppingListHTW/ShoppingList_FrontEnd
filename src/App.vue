@@ -1,26 +1,27 @@
 <template>
   <div>
-
-    <div id="nav">
+    <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
     <Header />
-    </div>
     <RouterView/>
     <ShoppingListView/>
   </div>
 </template>
 
-
 <script setup>
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import { watch, onMounted, ref } from 'vue'
 import { useAuth } from '@okta/okta-vue'
-import DarkModeSwitch from '@/components/modeSwitcher.vue'
+import DarkModeSwitch from '../src/components/modeSwitcher.vue';
 import Header from '@/components/Header.vue'
 
 const $auth = useAuth()
 const $route = useRoute()
 const authenticated = ref(false)
 const darkMode = ref(false)
+
+const toggleDarkMode = () => {
+  darkMode.value = !darkMode.value;
+}
 
 async function logout() {
   await $auth.signOut()
@@ -46,8 +47,6 @@ watch(() => darkMode.value, (newDarkMode) => {
 </script>
 
 <style>
-
-
 body {
   font-family: 'Arial', sans-serif;
 }

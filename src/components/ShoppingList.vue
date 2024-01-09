@@ -55,9 +55,7 @@
     <div v-if="showEditForm">
       <edit-item-form :editedItem="editedItem" :categories="categories" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
     </div>
-    <div v-if="showAddForm">
-      <add-item-button :editedItem="newItem" :categories="categories" @save-item="saveItem" @cancel-add="cancelAdd" />
-    </div>
+
     <add-item-button />
   </div>
 </template>
