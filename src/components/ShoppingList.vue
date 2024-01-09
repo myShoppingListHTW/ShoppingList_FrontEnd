@@ -72,7 +72,7 @@ import { useAuth } from '@okta/okta-vue'
 
 const email = ref('')
 const $auth = useAuth()
-
+const owner = email.value
 
 
 export default {
@@ -186,7 +186,7 @@ export default {
       const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: this.items[index].name, empty: newStatus, category: this.items[index].category }),
+        body: JSON.stringify({ name: this.items[index].name, empty: newStatus, category: this.items[index].category, owner: this.items[index].owner }),
       };
 
       axios.put(`${API_BASE_URL}${itemId}`, requestOptions.body, { headers: requestOptions.headers })
