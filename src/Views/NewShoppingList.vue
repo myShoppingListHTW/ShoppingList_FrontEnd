@@ -1,11 +1,10 @@
 <!-- ShoppingListView.vue -->
 
 <template>
-  <div>
-      <Cards/>
-    <div class="shopping-list-container">
-        <ShoppingList :items="shoppingItems" />
-    </div>
+
+    <div class="header">
+      <Header />
+
   </div>
 </template>
 
@@ -14,6 +13,7 @@
 import { ref } from 'vue';
 import Cards from '@/components/Cards.vue'
 import ShoppingList from '@/components/ShoppingList.vue'
+import Header from '@/components/Header.vue'
 
 const shoppingItems = ref([]);
 

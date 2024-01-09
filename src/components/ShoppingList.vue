@@ -55,6 +55,9 @@
     <div v-if="showEditForm">
       <edit-item-form :editedItem="editedItem" :categories="categories" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
     </div>
+    <div v-if="showAddForm">
+      <add-item-button :editedItem="newItem" :categories="categories" @save-item="saveItem" @cancel-add="cancelAdd" />
+    </div>
     <add-item-button />
   </div>
 </template>
@@ -63,9 +66,9 @@
 import axios from 'axios';
 import FilterSection from '@/components/FilterSection.vue';
 import EditItemForm from '@/components/EditItemForm.vue';
+import addItemButton from  '@/components/addItemButton.vue';
 import { API_BASE_URL } from '@/config/config';
 import ShareItemsList from '@/components/ShareItemList.vue';
-import AddItemButton from '@/components/addItemButton.vue';
 import { onMounted, ref } from 'vue'
 import { useAuth } from '@okta/okta-vue'
 
@@ -76,7 +79,7 @@ const $auth = useAuth()
 
 export default {
   components: {
-    AddItemButton,
+    addItemButton,
     ShareItemsList,
     FilterSection,
     EditItemForm,
@@ -123,8 +126,6 @@ export default {
       this.selectedFilterCategory = '';
       this.applyFilter();
     },
-
-
     applyFilter() {
       if (this.selectedFilterCategory) {
         this.items = this.allItems.filter((item) => item.category === this.selectedFilterCategory);
@@ -166,7 +167,6 @@ export default {
       this.showEditForm = false;
       this.editedItem = null;
     },
-
     updateItemOnServer(item) {
       axios.put(`${API_BASE_URL}/${item.id}`, item)
         .then(response => {
@@ -197,6 +197,10 @@ export default {
         })
         .catch(error => console.error('Error updating item status:', error));
     },
+    saveItem() {
+      this.saveditem = { ...this.items[index] };
+      this.showEditForm = true;
+    }
   }
 
 };

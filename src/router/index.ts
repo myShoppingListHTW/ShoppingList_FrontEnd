@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { LoginCallback, navigationGuard } from '@okta/okta-vue'
 import Login from '../components/Login.vue'
 import Profile from '../components/Profile.vue'
-
+import newList from '../Views/NewShoppingList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,8 +14,7 @@ const router = createRouter({
       component: () => import('../components/ShoppingList.vue'),
     },{
       path: '/newList',
-      name: 'newList',
-      component: () => import('../views/NewShoppingList.vue'),
+      component: newList
     },
 
     {

@@ -3,10 +3,12 @@
   <div class="edit-popup">
     <div class="edit-form">
       <h3>Edit Item</h3>
-
-      <input type="text" id="itemName" v-model="editedItem.name" required placeholder="Item Name" maxlength="20" minlength="2" autocomplete="on"/>
+      <input type="text" id="itemName" v-model="editedItem.name"
+             required placeholder="Item Name" maxlength="20" minlength="2"
+             autocomplete="on"/>
       <select v-model="editedItem.category">
-        <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
+        <option v-for="category in categories" :key="category"
+                :value="category">{{ category }}</option>
       </select>
       <div class="button-group">
         <button class="create-item-button" @click="saveEdits">Save</button>
