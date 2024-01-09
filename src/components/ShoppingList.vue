@@ -142,7 +142,7 @@ export default {
     deleteItem(index) {
       const itemId = this.items[index].id;
       axios
-        .delete(`${API_BASE_URL}/${itemId}`)
+        .delete(`${API_BASE_URL}${itemId}`)
         .then((response) => {
           if (response.status === 200) {
             this.items.splice(index, 1);
@@ -166,7 +166,7 @@ export default {
       this.editedItem = null;
     },
     updateItemOnServer(item) {
-      axios.put(`${API_BASE_URL}/${item.id}`, item)
+      axios.put(`${API_BASE_URL}${item.id}`, item)
         .then(response => {
           const index = this.items.findIndex(i => i.id === item.id);
           if (index !== -1) {
@@ -189,7 +189,7 @@ export default {
         body: JSON.stringify({ name: this.items[index].name, empty: newStatus, category: this.items[index].category }),
       };
 
-      axios.put(`${API_BASE_URL}/${itemId}`, requestOptions.body, { headers: requestOptions.headers })
+      axios.put(`${API_BASE_URL}${itemId}`, requestOptions.body, { headers: requestOptions.headers })
         .then(response => {
           this.items.splice(index, 1, response.data);
         })
