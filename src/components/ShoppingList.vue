@@ -55,8 +55,12 @@
     <div v-if="showEditForm">
       <edit-item-form :editedItem="editedItem" :categories="categories" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
     </div>
-
-    <add-item-button />
+    <div v-if="showAddItemForm">
+      <add-item-button :newItem="newItem" :categories="categories" @save-item="saveItem" @cancel-adding-item="cancelAddingItem" />
+    </div>
+<footer class="button">
+    <button class="create-item-button" @click="addItem()">Create Item</button>
+</footer>
   </div>
 </template>
 
@@ -86,8 +90,15 @@ export default {
     return {
       items: [],
       allItems: [],
+      newItem: {
+        name: '',
+        empty: true,
+        category: '',
+        owner: 'everybody',
+      },
       editedItem: null,
       showEditForm: false,
+      showAddItemForm: false,
       selectedFilterCategory: '',
       categories: ['FRUIT', 'VEGETABLE', 'MEAT', 'FISH', 'DAIRY', 'BAKERY', 'SWEETS', 'DRINKS', 'ALCOHOL', 'OTHER'],
     };
@@ -195,12 +206,21 @@ export default {
         })
         .catch(error => console.error('Error updating item status:', error));
     },
-    saveItem() {
-      this.saveditem = { ...this.items[index] };
-      this.showEditForm = true;
-    }
-  }
+    saveItem(newItem){
+      axios.post(API_BASE_URL, newItem)
+        .then(response => {
+          this.items.push(response.data);
 
+        })
+        .catch(error => console.error('Error adding new item:', error));
+    },
+    cancelAddingItem() {
+      this.showAddItemForm = false;
+    },
+  addItem() {
+    this.showAddItemForm = true;
+  },
+  },
 };
 </script>
 
