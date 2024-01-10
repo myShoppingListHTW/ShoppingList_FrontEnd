@@ -42,9 +42,6 @@ export default {
   color: #000; /* Ensure this color stands out against your background */
 }
 
-/* Additional styling for hover effect */
-
-
 
 
 </style>

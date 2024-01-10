@@ -1,10 +1,9 @@
 <template>
   <div class="list-group-horizontal-xxl">
-  <div class="controls-container">
-    <div class="share-items-container">
+  <div class="controls-container ">
+    <div class="share-items-container-fluid">
       <ShareItemsList :items="items" />
     </div>
-
     <div class="filter-section">
       <FilterSection
         :selectedFilterCategory="selectedFilterCategory"
@@ -13,7 +12,11 @@
         @update:deleteSelectedFilter="deleteSelectedFilter"
       />
     </div>
-
+    <div>
+      <section class="button">
+        <button class="create-item-button" @click="addItem()">Create Item</button>
+      </section>
+    </div>
   </div>
 
   <div class ="table-scroll-container" >
@@ -59,11 +62,7 @@
       <add-item-button :newItem="newItem" :categories="categories" @save-item="saveItem" @cancel-adding-item="cancelAddingItem" />
     </div>
   </div>
-    <div>
-  <section class="button">
-    <button class="create-item-button" @click="addItem()">Create Item</button>
-    </section>
-    </div>  </div>
+  </div>
 </template>
 
 <script>
@@ -244,13 +243,17 @@ export default {
 }
 
 .table th {
-  background-color: #000;
+  background-color: #343a3f;
   color: #fff;
 }
 
   .table td {
-    background-color: #000;
+    background-color: rgb(48, 52, 56);
     color: #fff;
+  }
+
+  .table tbody tr:nth-child(odd) td {
+    background-color: #343a3f;
   }
 
 
@@ -306,6 +309,8 @@ export default {
 .table-scroll-container {
   max-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
 }
 
 </style>

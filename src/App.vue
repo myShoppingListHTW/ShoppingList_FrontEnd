@@ -1,9 +1,9 @@
 <template>
   <div class="App">
     <nav>
-      <Header/>
+      <Header />
     </nav>
-    <router-view/>
+    <router-view />
     <footer>
       <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
     </footer>
@@ -11,17 +11,17 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView, useRoute } from 'vue-router'
-import { watch, onMounted, ref } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import { useAuth } from '@okta/okta-vue'
-import DarkModeSwitch from '../src/components/modeSwitcher.vue';
+import DarkModeSwitch from '../src/components/modeSwitcher.vue'
 import Header from '@/components/Header.vue'
+
 const $auth = useAuth()
-const $route = useRoute()
 const authenticated = ref(false)
 const darkMode = ref(false)
+
 const toggleDarkMode = () => {
-  darkMode.value = !darkMode.value;
+  darkMode.value = !darkMode.value
 }
 
 async function logout() {
@@ -32,8 +32,8 @@ async function isAuthenticated() {
   authenticated.value = await $auth.isAuthenticated()
 }
 
-watch(() => $route.path, async () => {
-  await isAuthenticated()
+watchEffect(() => {
+  document.body.classList.toggle('dark-mode', darkMode.value)
 })
 
 onMounted(async () => {
@@ -41,9 +41,8 @@ onMounted(async () => {
   $auth.authStateManager.subscribe(isAuthenticated)
 })
 
-watch(() => darkMode.value, (newDarkMode) => {
-  console.log('Dark Mode Toggled:', newDarkMode);
-  document.body.classList.toggle('dark-mode', newDarkMode);
+watchEffect(() => {
+  console.log('Dark Mode Toggled:', darkMode.value)
 })
 </script>
 
@@ -56,5 +55,4 @@ body {
   background-color: #2d2d2d;
   color: #ffffff;
 }
-
 </style>
