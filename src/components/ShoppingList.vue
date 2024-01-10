@@ -1,6 +1,6 @@
 <template>
   <div class="list-group-horizontal-xxl">
-  <div class="controls-container ">
+  <div class="controls-container">
     <div class="share-items-container-fluid">
       <ShareItemsList :items="items" />
     </div>
@@ -293,7 +293,6 @@ export default {
   position: sticky;
   top: 0;
   z-index: 100;
-
 }
 
 .create-item-button {
@@ -308,7 +307,7 @@ export default {
 
 }
 .table-scroll-container {
-  max-height: 400px;
+  max-height: 380px;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;

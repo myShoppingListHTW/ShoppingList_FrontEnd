@@ -1,7 +1,9 @@
 <template>
-    <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
+  <div class="app">
     <div class="app-container">
-
+      <div class="toggle">
+    <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
+      </div>
         <div class="App">
             <nav>
                 <Header />
@@ -9,6 +11,7 @@
             <router-view />
         </div>
     </div>
+  </div>
 </template>
 
 
@@ -23,6 +26,8 @@ import image from '../src/assets/landingPagePic.jpg'
 const $auth = useAuth()
 const authenticated = ref(false)
 const darkMode = ref(false)
+
+
 
 const toggleDarkMode = () => {
   darkMode.value = !darkMode.value
@@ -48,54 +53,55 @@ onMounted(async () => {
 watchEffect(() => {
   console.log('Dark Mode Toggled:', darkMode.value)
 })
+
 </script>
 
+
 <style>
-
-
 .dark-mode {
   background-color: #2d2d2d;
-
+  color: #fff; /* Adjust text color for better readability in dark mode */
 }
 
 
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-    max-height: 100vh;
-    /* Full viewport height to ensure the container can be centered vertically */
-    background-color: #f0f0f0; /* Optional: background color for the body */
-    width: 100vw;
-    font-family: 'Arial', sans-serif;
-    display: flex;
+.app {
+  min-width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 90vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px; /* Adjusted padding for better spacing */
 }
 
 .app-container {
-    width: 50%; /* Set width to 50% of the viewport */
-    min-width: 600px; /* Maximum width to maintain a reasonable size */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow for better focus */
-    padding: 20px; /* Padding inside the container */
-    background-color: #ffffff; /* Background color for the container */
-    justify-content: center;
-    align-items: center;
-    min-height: 20vh;
+  background-color: #f4f4f4; /* Light background color for the container */
+  border-radius: 10px; /* Add some rounded corners for a softer look */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow for depth */
+  position: absolute; /* Added position relative for better positioning of the toggle */
+  min-width: 80%;
+  min-height: 80%;
+  overflow: hidden; /* Hide the overflow of the container */
+  padding: 20px;
 }
 
-.App {
-    /* Your existing .App styles */
+.toggle {
+  position: absolute;
+  top: 10px; /* Adjusted top spacing for better positioning */
+  right: 10px; /* Adjusted right spacing for better positioning */
 }
 
+.content {
+  padding: 20px; /* Added padding for better spacing inside the container */
+}
 
 .image {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
 }
-
 </style>
 
