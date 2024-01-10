@@ -1,13 +1,12 @@
 <template>
+    <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
     <div class="app-container">
+
         <div class="App">
             <nav>
                 <Header />
             </nav>
             <router-view />
-            <footer>
-                <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
-            </footer>
         </div>
     </div>
 </template>
@@ -56,7 +55,7 @@ watchEffect(() => {
 
 .dark-mode {
   background-color: #2d2d2d;
-  color: #ffffff;
+
 }
 
 
@@ -70,7 +69,8 @@ body {
     /* Full viewport height to ensure the container can be centered vertically */
     background-color: #f0f0f0; /* Optional: background color for the body */
     width: 100vw;
-    font-family: 'Arial', sans-serif
+    font-family: 'Arial', sans-serif;
+    display: flex;
 }
 
 .app-container {
@@ -85,15 +85,10 @@ body {
 }
 
 .App {
-    flex-direction: column;
-
     /* Your existing .App styles */
 }
 
-.dark-mode {
-    background-color: #2d2d2d;
-    color: #ffffff;
-}
+
 .image {
     width: 100%;
     height: 100%;
