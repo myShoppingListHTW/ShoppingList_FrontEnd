@@ -39,9 +39,9 @@ const addItem = (item: ShoppingItem) => {
 
 }
 @media screen and (max-width: 600px) {
-  .shopping-list-container {
-    max-width: 90%; /* Adjust width for smaller screens */
-  }
+    .shopping-list-container {
+        max-width: 90%; /* Adjust width for smaller screens */
+    }
 }
 .sticky-header {
   position: sticky;

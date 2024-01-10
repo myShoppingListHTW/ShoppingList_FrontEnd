@@ -213,6 +213,8 @@ export default {
         .then(response => {
           this.items.push(response.data);
           this.showAddItemForm = false;
+          newItem.name='';
+          newItem.category='';
           this.fetchItems(email.value);
         })
         .catch(error => console.error('Error adding new item:', error));
@@ -285,7 +287,6 @@ export default {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: white;
 }
 
 .table th.sticky-header {

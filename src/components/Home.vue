@@ -1,7 +1,6 @@
 // Home.vue
 <template>
   <section class="home-view">
-    <div :style="image" class="image"></div>
   </section>
 </template>
 
@@ -9,7 +8,6 @@
 export default {
   data() {
     return {
-      image: { backgroundImage: "url('src/assets/landingPagePic.jpg')" }
     };
   }
 };
@@ -19,7 +17,7 @@ export default {
 .home-view {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 40vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,4 +31,5 @@ export default {
   background-position: center;
 
 }
+
 </style>
