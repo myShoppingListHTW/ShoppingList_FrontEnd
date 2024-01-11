@@ -79,24 +79,16 @@ body {
 
 .app-container {
   background-color: #f4f4f4;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0 0 10px rgb(0, 0, 0, 5);
   position: fixed;
-  min-width: 80%;
-  min-height: 80%;
+  min-width: 60%;
+  height: fit-content ;
   overflow: hidden;
   padding: 20px;
 }
 
-.toggle {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
 
-.content {
-  padding: 20px; /* Added padding for better spacing inside the container */
-}
 
 .image {
   width: 100%;

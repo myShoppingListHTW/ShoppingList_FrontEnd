@@ -39,7 +39,7 @@ export default {
   border: none;
   cursor: pointer;
   font-size: 24px; /* Adjust as necessary */
-  color: #000; /* Ensure this color stands out against your background */
+  color: #009677; /* Ensure this color stands out against your background */
 }
 
 

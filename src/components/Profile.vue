@@ -29,11 +29,11 @@ onMounted(async () => {
 
 <template>
   <div id="profile">
-    <h1>My User Profile (ID Token Claims)</h1>
+    <h2>My User Profile</h2>
     <p>
-      Below is the information from your ID token.
+      Below is the information of your user profile.
     </p>
-    <table>
+    <table class="content-table">
       <thead>
       <tr>
         <th>Claim</th>
@@ -42,26 +42,21 @@ onMounted(async () => {
       </thead>
       <tbody>
       <tr>
-        <td> First Name</td>
+        <td>First Name:</td>
         <td> {{userName}}</td>
       </tr>
             <tr>
-        <td> family Name</td>
+        <td>family Name:</td>
         <td> {{familyName}}</td>
             </tr>
             <tr>
-        <td> email</td>
-        <td> {{email}}</td>
+        <td>email:</td>
+        <td>{{email}}</td>
             </tr>
             <tr>
-        <td> email Verified</td>
-        <td> {{emailVerified}}</td>
+        <td>email Verified</td>
+        <td>{{emailVerified}}</td>
             </tr>
-      </tbody>
-      <tbody>
-    <tr>
-      <td> {{userName}}</td>
-    </tr>
       </tbody>
     </table>
   </div>
@@ -69,5 +64,52 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.content-table  {
+
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  min-width: 100%;
+  min-height: 10%;
+}
+
+.content-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.content-table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+.content-table tr td:nth-child(1) {
+  text-align: left;
+}
 
 </style>
+

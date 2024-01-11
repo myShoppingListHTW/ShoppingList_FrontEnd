@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container">
   <div class="controls-container">
     <div class="share-items-container-fluid">
       <ShareItemsList :items="items" />
@@ -18,9 +18,8 @@
       </section>
     </div>
   </div>
-
-  <div class ="table-scroll-container" >
-    <table class=" table table-responsive table-borderless table-hover table-responsive-lg">
+    <div class="content-table-container">
+    <table class="content-table ">
       <thead>
       <tr>
         <th scope="col" class="checkbox-col sticky-header"></th>
@@ -30,8 +29,8 @@
         <th scope="col" class="text-center sticky-header">Actions</th>
       </tr>
       </thead>
-      <tbody>
-      <tr v-for="(item, index) in items" :key="index" :class="{ 'table-success': !item.empty }">
+      <tbody class="overflow-y-scroll">
+      <tr  v-for="(item, index) in items" :key="index" :class="{ 'table-success': !item.empty }">
         <td class="checkbox-col">
           <div class="form-check">
             <input type="checkbox" :checked="!item.empty" @change="updateStatus(index)" class="form-check-input" />
@@ -49,12 +48,13 @@
           <div>{{ item.category || 'NO CAT*' }}</div>
         </td>
         <td class="text-center">
-          <button @click="editItem(index)" class="btn btn-primary btn-sm">✎</button>
-          <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2">✖</button>
+          <button @click="editItem(index)" class="btn btn-primary btn-sm shadow">✎</button>
+          <button @click="deleteItem(index)" class="btn btn-danger btn-sm ml-2 shadow ">✖</button>
         </td>
       </tr>
       </tbody>
     </table>
+      </div>
     <div v-if="showEditForm">
       <edit-item-form :editedItem="editedItem" :categories="categories" @save-edits="saveEdits" @cancel-edit="cancelEdit" />
     </div>
@@ -62,7 +62,6 @@
       <add-item-button :newItem="newItem" :categories="categories" @save-item="saveItem" @cancel-adding-item="cancelAddingItem" />
     </div>
   </div>
-</div>
 
 </template>
 
@@ -232,95 +231,105 @@ export default {
 
 <style scoped>
 
-.table {
-  width: 100%;
-  height: 100%;
-  border-collapse: collapse;
-}
-.container-fluid {
-  padding: 0;
-  margin: 0;
+
+
+.container {
+  padding: 5px;
+  margin: 0 auto;
   height: 100%;
   width: 100%;
+  max-height: 400px;
 }
 
-.table th,
-.table td {
-  text-align: center;
-  vertical-align: middle;
-  padding: 10px;
-  border-bottom: 1px solid #666;
-}
 
-.table th {
-  background-color: #343a3f;
-  color: #fff;
-}
-
-  .table td {
-    background-color: rgb(48, 52, 56);
-    color: #fff;
-  }
-
-  .table tbody tr:nth-child(odd) td {
-    background-color: #343a3f;
-  }
-
-
-  .table-hover tbody tr:hover {
-    background-color: #444;
-  }
 
 .form-check-input {
   margin-top: 0.3rem;
 }
-
 .btn-sm {
   padding: 0.2rem 0.5rem;
   font-size: 0.8rem;
 }
-
 .line-through {
   text-decoration: line-through;
 }
-
 .checkbox-col {
   width: 20px;
 }
 .controls-container {
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
   position: sticky;
-  background: gray;
+  background-color: rgb(212, 222, 237);
   top: 0;
   z-index: 100;
   padding: 1.5%;
 }
 
-.table th.sticky-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
 .create-item-button {
-  background-color: #4caf50;
+  background-color: #009778;
+  border: none;
   color: #fff;
   cursor: pointer;
   padding: 10px 20px;
-  border: none;
+
   border-radius: 5px;
   flex: 1;
   margin: 0 5px;
-
 }
-.table-scroll-container {
-  max-height: 380px;
+
+
+
+.content-table  {
+  height: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  min-width: 100%;
+  height: 100%;
+}
+
+.content-table thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.content-table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+
+.content-table-container{
+  max-height: 350px; /* Set the maximum height for the container */
   overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
 }
 
 </style>
