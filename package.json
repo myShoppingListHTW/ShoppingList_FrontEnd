@@ -9,6 +9,7 @@
   "scripts": {
     "start": "serve dist",
     "dev": "vite",
+    "serve": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
