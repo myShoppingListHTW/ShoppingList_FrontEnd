@@ -1,5 +1,5 @@
 <template>
-  <div class="list-group-horizontal-xxl">
+  <div class="container-fluid">
   <div class="controls-container">
     <div class="share-items-container-fluid">
       <ShareItemsList :items="items" />
@@ -62,7 +62,8 @@
       <add-item-button :newItem="newItem" :categories="categories" @save-item="saveItem" @cancel-adding-item="cancelAddingItem" />
     </div>
   </div>
-  </div>
+</div>
+
 </template>
 
 <script>
@@ -233,7 +234,14 @@ export default {
 
 .table {
   width: 100%;
+  height: 100%;
   border-collapse: collapse;
+}
+.container-fluid {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .table th,
@@ -285,8 +293,10 @@ export default {
   align-items: center;
   margin-bottom: 10px;
   position: sticky;
+  background: gray;
   top: 0;
   z-index: 100;
+  padding: 1.5%;
 }
 
 .table th.sticky-header {

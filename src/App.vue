@@ -1,9 +1,9 @@
 <template>
+
+  <div :style="image" class="image">
   <div class="app">
     <div class="app-container">
-      <div class="toggle">
-    <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
-      </div>
+
         <div class="App">
             <nav>
                 <Header />
@@ -11,6 +11,7 @@
             <router-view />
         </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -58,39 +59,39 @@ watchEffect(() => {
 
 
 <style>
-.dark-mode {
-  background-color: #2d2d2d;
-  color: #fff; /* Adjust text color for better readability in dark mode */
-}
 
+
+body {
+  background-size: cover;
+  background-position: center;
+  font-family: sans-serif;
+  background-image: url("@/assets/backgroundPic.jpg");
+  background-repeat: no-repeat;}
 
 .app {
   min-width: fit-content;
+  min-height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-height: 90vh;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px; /* Adjusted padding for better spacing */
 }
 
 .app-container {
-  background-color: #f4f4f4; /* Light background color for the container */
-  border-radius: 10px; /* Add some rounded corners for a softer look */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a subtle box shadow for depth */
-  position: absolute; /* Added position relative for better positioning of the toggle */
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgb(0, 0, 0, 5);
+  position: fixed;
   min-width: 80%;
   min-height: 80%;
-  overflow: hidden; /* Hide the overflow of the container */
+  overflow: hidden;
   padding: 20px;
 }
 
 .toggle {
   position: absolute;
-  top: 10px; /* Adjusted top spacing for better positioning */
-  right: 10px; /* Adjusted right spacing for better positioning */
+  top: 10px;
+  right: 10px;
 }
 
 .content {

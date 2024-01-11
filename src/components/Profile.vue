@@ -2,22 +2,28 @@
 import { onMounted, ref } from 'vue'
 import { useAuth } from '@okta/okta-vue'
 import type { CustomUserClaim } from '@okta/okta-auth-js'
-
+import { reference } from '@popperjs/core'
 const $auth = useAuth()
 const claims = ref<{claim: string, value: CustomUserClaim |  CustomUserClaim[]}[]>([{
   claim: 'Loading...',
   value: ''
 }])
+const email = ref('User Email')
+const userName = ref('User Name')
+const familyName = ref('User Family Name')
+const emailVerified = ref('User Email Verified')
+
 
 onMounted(async () => {
   const userClaims = await $auth.getUser()
-  for (const claim in userClaims) {
-    claims.value.push({
-      claim,
-      value: userClaims[claim]
-    })
-  }
+  email.value = userClaims.email.toString()
+  userName.value = userClaims.given_name.toString()
+  familyName.value = userClaims.family_name.toString()
+  emailVerified.value = userClaims.email_verified.toString()
+
 })
+
+
 
 </script>
 
@@ -35,14 +41,30 @@ onMounted(async () => {
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(claim, index) in claims" :key="index">
-        <td>{{claim.claim}}</td>
-        <td :id="'claim-' + claim.claim">{{claim.value}}</td>
+      <tr>
+        <td> First Name</td>
+        <td> {{userName}}</td>
       </tr>
+            <tr>
+        <td> family Name</td>
+        <td> {{familyName}}</td>
+            </tr>
+            <tr>
+        <td> email</td>
+        <td> {{email}}</td>
+            </tr>
+            <tr>
+        <td> email Verified</td>
+        <td> {{emailVerified}}</td>
+            </tr>
+      </tbody>
+      <tbody>
+    <tr>
+      <td> {{userName}}</td>
+    </tr>
       </tbody>
     </table>
   </div>
-  <h6 claim="email">Email</h6>
 
 </template>
 
