@@ -26,6 +26,7 @@
         <a  v-on:click="logout()">Logout</a>
       </button>
     </div>
+
   </header>
 </template>
 

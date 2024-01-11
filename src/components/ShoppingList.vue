@@ -79,9 +79,9 @@ const email = ref('')
 const $auth = useAuth()
 const owner = email.value
 
-
 export default {
   components: {
+
     addItemButton,
     ShareItemsList,
     FilterSection,
@@ -96,6 +96,7 @@ export default {
         empty: true,
         category: '',
         owner: 'everybody',
+        darkmode: false,
       },
       editedItem: null,
       showEditForm: false,
@@ -184,7 +185,8 @@ export default {
           if (index !== -1) {
             this.items.splice(index, 1, response.data);
           }
-        })
+        }
+        )
         .catch(error => console.error('Error updating item:', error));
     },
     cancelEdit() {
@@ -204,7 +206,9 @@ export default {
       axios.put(`${API_BASE_URL}${itemId}`, requestOptions.body, { headers: requestOptions.headers })
         .then(response => {
           this.items.splice(index, 1, response.data);
-        })
+        }
+        )
+
         .catch(error => console.error('Error updating item status:', error));
     },
     saveItem(newItem){
@@ -220,6 +224,7 @@ export default {
         .catch(error => console.error('Error adding new item:', error));
     },
     cancelAddingItem() {
+      this.newItem = '';
       this.showAddItemForm = false;
     },
   addItem() {

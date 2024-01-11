@@ -3,6 +3,7 @@
   <div :style="image" class="image">
   <div class="app">
     <div class="app-container">
+      <DarkModeSwitch @toggleDarkMode="toggleDarkMode" />
 
         <div class="App">
             <nav>
@@ -44,6 +45,8 @@ async function isAuthenticated() {
 
 watchEffect(() => {
   document.body.classList.toggle('dark-mode', darkMode.value)
+  console.log('Dark Mode Toggled:', darkMode.value)
+
 })
 
 onMounted(async () => {
@@ -51,9 +54,6 @@ onMounted(async () => {
   $auth.authStateManager.subscribe(isAuthenticated)
 })
 
-watchEffect(() => {
-  console.log('Dark Mode Toggled:', darkMode.value)
-})
 
 </script>
 
@@ -96,5 +96,10 @@ body {
   background-size: cover;
   background-position: center;
 }
+.dark-mode {
+  background-color: #2d2d2d;
+  color: #ffffff;
+}
+
 </style>
 

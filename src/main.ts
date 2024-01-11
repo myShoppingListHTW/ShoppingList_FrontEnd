@@ -19,7 +19,7 @@ import mitt from 'mitt';
 const oktaSignIn = new OktaSignIn({
   baseUrl: 'https://dev-70865751.okta.com',
   clientId: '0oaebpzxgt9rJG1bn5d7',
-  redirectUri: 'http://localhost:3000/login/callback',
+  redirectUri: 'https://myshoppinglistfrontend-f9889051a5f1.herokuapp.com/login/callback',
   authParams: {
     pkce: true,
     issuer: 'https://dev-70865751.okta.com/oauth2/default',
