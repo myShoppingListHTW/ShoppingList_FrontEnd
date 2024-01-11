@@ -75,6 +75,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
+
 }
 
 .app-container {
@@ -99,6 +100,10 @@ body {
 .dark-mode {
   background-color: #2d2d2d;
   color: #ffffff;
+  .app-container {
+    background-color: #2d2d2d;
+    color: #ffffff;
+  }
 }
 
 </style>

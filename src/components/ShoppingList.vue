@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="container">
   <div class="controls-container">
     <div class="share-items-container-fluid">
@@ -74,6 +74,8 @@ import { API_BASE_URL } from '@/config/config';
 import ShareItemsList from '@/components/ShareItemList.vue';
 import { onMounted, ref } from 'vue'
 import { useAuth } from '@okta/okta-vue'
+import DarkModeSwitch from "@/App.vue";
+import ModeSwitcher from "@/components/modeSwitcher.vue";
 
 const email = ref('')
 const $auth = useAuth()
@@ -81,6 +83,8 @@ const owner = email.value
 
 export default {
   components: {
+    ModeSwitcher,
+    DarkModeSwitch,
 
     addItemButton,
     ShareItemsList,
@@ -237,7 +241,6 @@ export default {
 <style scoped>
 
 
-
 .container {
   padding: 5px;
   margin: 0 auto;
@@ -245,8 +248,6 @@ export default {
   width: 100%;
   max-height: 400px;
 }
-
-
 
 .form-check-input {
   margin-top: 0.3rem;
@@ -336,5 +337,8 @@ export default {
   max-height: 350px; /* Set the maximum height for the container */
   overflow-y: auto;
 }
+
+
+
 
 </style>
