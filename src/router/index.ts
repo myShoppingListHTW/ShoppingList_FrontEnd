@@ -2,7 +2,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { LoginCallback, navigationGuard } from '@okta/okta-vue'
 import Profile from '../components/Profile.vue'
-import newList from '../Views/NewShoppingList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

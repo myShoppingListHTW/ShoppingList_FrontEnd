@@ -20,15 +20,12 @@ const oktaSignIn = new OktaSignIn({
   baseUrl: 'https://dev-70865751.okta.com',
   clientId: '0oaebpzxgt9rJG1bn5d7',
  redirectUri: 'https://myshoppinglistfrontend-f9889051a5f1.herokuapp.com/login/callback',
- // redirectUri: 'http://localhost:3000/login/callback',
   authParams: {
     pkce: true,
     issuer: 'https://dev-70865751.okta.com/oauth2/default',
     display: 'page',
     scopes: ['openid', 'profile', 'email'],
   },
-  features: { registration: true },
-  useInteractionCodeFlow: false,
   useClassicEngine: true,
 });
 
