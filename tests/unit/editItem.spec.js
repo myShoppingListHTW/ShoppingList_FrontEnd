@@ -47,6 +47,7 @@ describe('EditItemForm.vue', () => {
     await wrapper.find('button').trigger('click');
     expect(wrapper.emitted('save-edits')[0][0]).toEqual({ name: 'Old Item', category: 'VEGETABLE' });
   });
+
 });
 
 
