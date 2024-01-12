@@ -2,8 +2,9 @@
 <template>
   <section class="home-view">
     <div class="content-container">
-      <h1>Welcome to Your App</h1>
-      <p>This is the landing page after signing in. Feel free to customize this text.</p>
+      <p>Using a shopping checklist can be a game-changer.</p>
+        <p>It's not just about making lists; </p>
+      <p> it's about saving big! 🛒💰</p>
     </div>
   </section>
   <section class="button-bar">
@@ -56,6 +57,9 @@ export default {
 .home-view{
   color: #181818;
 
+}
+p{
+font-style: italic;
 }
 
 
