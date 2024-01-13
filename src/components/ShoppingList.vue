@@ -70,7 +70,6 @@ import axios from 'axios';
 import FilterSection from '@/components/FilterSection.vue';
 import EditItemForm from '@/components/EditItemForm.vue';
 import addItemButton from  '@/components/addItemButton.vue';
-import { API_BASE_URL } from '@/config/config';
 import ShareItemsList from '@/components/ShareItemList.vue';
 import { onMounted, ref } from 'vue'
 import { useAuth } from '@okta/okta-vue'
@@ -80,12 +79,16 @@ import ModeSwitcher from "@/components/modeSwitcher.vue";
 const email = ref('')
 const $auth = useAuth()
 const owner = email.value
+let API_BASE_URL = ref('')
+const localEndpoint = 'http://localhost:8080/api/v1/article/';
+const herokuEndpoint = 'https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article/';
+
 
 export default {
   components: {
     ModeSwitcher,
     DarkModeSwitch,
-
+    API_BASE_URL,
     addItemButton,
     ShareItemsList,
     FilterSection,
@@ -116,7 +119,19 @@ export default {
     })
   },
   methods: {
+
+    async getUrl()  {
+      try {
+      const response = await fetch(localEndpoint);
+      API_BASE_URL = localEndpoint;
+    } catch (error) {
+      API_BASE_URL = herokuEndpoint;
+    }
+  },
+
+
     async fetchItems(owner = 'everybody') {
+      await this.getUrl();
       try {
         const endpoint = API_BASE_URL  + `?owner=${email.value}`;
 

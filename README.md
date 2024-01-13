@@ -1,27 +1,30 @@
 
-**MyHTWShoppingList**
+# MyHTWShoppingList
 
-**Overview**
+## Overview
 
 The Shopping List App is a powerful and user-friendly checklist application designed to streamline your shopping experience.
 It simplifies the process of creating, managing, and sharing your shopping lists.
 No more forgetting items or feeling overwhelmed at the store – our app has got you covered!
 
-****very Important:****
-We regret to inform you that due to unforeseen technical challenges, we were unable to configure the self-registration feature for our app as originally planned. As a result, we have taken the initiative to add your official university email addresses to our Okta system.
+## Very Important:V
+##### We regret to inform you that due to unforeseen technical challenges, we were unable to configure the self-registration 
+feature in our app as originally planned. As a result, we have taken the initiative to add your official university email addresses to our Okta system.
 
-Here's what you need to know:
+##### Here's what you need to know:
 
 * You will receive an activation email from Okta to your official university email address.
+
+
 * Once your Okta account is activated, you will be able to log in to our app using your credentials.
 We understand that this may cause some inconvenience, and we sincerely apologize for any disruption this may cause to your experience. Our team is here to assist you throughout the process, and we are committed to ensuring a smooth transition.
 
-If you encounter any confusion, problems, or have questions during the account activation process, please do not hesitate to contact us. We will be readily available to provide any assistance you may require.
+##### If you encounter any confusion, problems, or have questions during the account activation process, please do not hesitate to contact us. We will be readily available to provide any assistance you may require.
 
 Thank you for your understanding, and we appreciate your patience as we work to resolve this matter. We look forward to providing you with an excellent user experience on our app.
 
 
-`**Key Features**
+## Key Functions
 
   * **Login:** To access your personalized shopping lists and enjoy features like data synchronization across devices, start by logging into your account. Click on the "Login" button and provide your credentials (Email and password).
   * **Add New Items:** You can add items to your shopping list with just a few taps. Enter the item's name and choose its category from the dropdown menu for better organization.
@@ -34,16 +37,12 @@ Thank you for your understanding, and we appreciate your patience as we work to 
   * **Logout:** You can always choose to log out from your account for added security or to switch between accounts. Click on the "Logout" button to sign out of your current session.
 
 **Contributors:**
-* Ghazi Nakkash 587550 /
-* Rita Chiblaq 588480 / rita.chiblaq@gmail.com
+* [Rita Chibla   588480](https://github.com/RitaChiblaq) -> [email](rita.chiblaq@gmail.com)
+   
+* [Ghazi Nakkash 587550](https://github.com/Ghazi-nk) -> [email](ghazi.nakkash.gn@gmail.com)
+  
 
-
-
-
-
-
-
-This template should help get you started developing with Vue 3 in Vite.
+#### This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
@@ -59,7 +58,6 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
     1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
     2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
