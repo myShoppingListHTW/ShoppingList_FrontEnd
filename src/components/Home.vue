@@ -4,11 +4,11 @@
       <h1>Welcome to MyHTWShoppingList</h1>
       <p>
         The Shopping List App is a powerful and user-friendly checklist
-        application designed to streamline your shopping experience.
+        application designed to streamline
       </p>
       <p>
-        It simplifies the process of creating, managing, and sharing your
-        shopping lists.
+        your shopping experience. It simplifies the process of creating,
+        managing, and sharing your shopping lists.
       </p>
       <p>No more forgetting items or feeling overwhelmed at
         the store – our app has got you covered!</p>
