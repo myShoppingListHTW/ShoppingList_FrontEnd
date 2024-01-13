@@ -68,6 +68,8 @@ body {
   background-image: url("@/assets/backgroundPic.jpg");
   background-repeat: no-repeat;}
 
+
+
 .app {
   min-width: fit-content;
   min-height: 90vh;
@@ -99,11 +101,13 @@ body {
 }
 .dark-mode {
   background-color: #2d2d2d;
-  color: #ffffff;
+
+
   .app-container {
     background-color: #2d2d2d;
     color: #ffffff;
   }
+
 }
 
 </style>

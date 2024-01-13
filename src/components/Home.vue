@@ -26,10 +26,11 @@
 <script>
 import shoppingList from '@/components/ShoppingList.vue'
 import { RouterLink, useRoute } from 'vue-router'
-import { ref, onMounted, watchEffect } from 'vue'
+import { ref, onMounted, watchEffect, watch } from 'vue'
 import { useAuth } from '@okta/okta-vue'
 import DarkModeSwitch from '@/components/modeSwitcher.vue'
 
+const darkMode = ref(false)
 export default {
   components: { RouterLink },
   setup() {
@@ -52,6 +53,11 @@ export default {
     return { authenticated }
   },
 };
+
+watch(() => darkMode.value, (newDarkMode) => {
+  console.log('Dark Mode Toggled:', newDarkMode);
+  document.body.classList.toggle('dark-mode', newDarkMode);
+})
 </script>
 
 <style scoped>
@@ -79,7 +85,9 @@ export default {
   color: #050202;
 }
 
+
 .home-view {
-  color: #181818;
+  color: inherit;
+  background-color: inherit;
 }
 </style>
