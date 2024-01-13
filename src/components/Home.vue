@@ -8,9 +8,10 @@
       </p>
       <p>
         It simplifies the process of creating, managing, and sharing your
-        shopping lists. No more forgetting items or feeling overwhelmed at
-        the store – our app has got you covered!
+        shopping lists.
       </p>
+      <p>No more forgetting items or feeling overwhelmed at
+        the store – our app has got you covered!</p>
       <p>
         Log in now to unlock a personalized shopping journey. Happy shopping!
       </p>

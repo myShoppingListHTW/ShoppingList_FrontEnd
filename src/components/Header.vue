@@ -5,33 +5,29 @@
     <div class="col-md-3 mb-2 mb-md-0">
       <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
         <img src="@/assets/groceries.png" alt="Groceries" width="50" height="50" aria-label="Groceries">
-          <use xlink:href="#groceries"></use>
+        <use xlink:href="#groceries"></use>
       </a>
     </div>
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
       <li v-if="authenticated">
         <router-link to="/ShoppingList" class="nav-link px-2 link-primary">My List</router-link>
       </li>
-        <p v-if="!authenticated" class="col-lg-10 fst-4">Welcome to My HTW Shopping</p>
+      <p v-if="!authenticated" class="col-lg-10 fst-4">Welcome to My HTW Shopping</p>
       <li v-if="authenticated">
         <router-link to="/profile" class="nav-link px-2 link-primary">Profile</router-link>
       </li>
     </ul>
     <div class="col-md-3 text-end">
-      <button type="button" class="btn btn-outline-primary me-2" to="/login" v-if="!authenticated">
+      <button type="button" class="btn btn-outline-primary me-2" to="/login" v-if="!authenticated && $route.path !== '/login'">
         <router-link to="/login" class="nav-link px-2 text-blue">Login</router-link>
       </button>
 
       <button type="button" class="btn btn-primary me-2" v-if="authenticated">
-        <a  v-on:click="logout()">Logout</a>
+        <a v-on:click="logout()">Logout</a>
       </button>
     </div>
-
   </header>
 </template>
-
-
-
 
 
 

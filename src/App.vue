@@ -66,7 +66,9 @@ body {
   background-position: center;
   font-family: sans-serif;
   background-image: url("@/assets/backgroundPic.jpg");
-  background-repeat: no-repeat;}
+  background-repeat: no-repeat;
+
+}
 
 
 
