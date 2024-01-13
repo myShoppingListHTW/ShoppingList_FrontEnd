@@ -20,7 +20,10 @@ interface ShoppingItem {
   category: string;
   id: number
 }
-const shoppingItems = ref<ShoppingItem[]>([])
+const shoppingItems = ref<ShoppingItem[]>([]);
+const addItem = (item: ShoppingItem) => {
+  shoppingItems.value.push(item);
+};
 
 
 </script>

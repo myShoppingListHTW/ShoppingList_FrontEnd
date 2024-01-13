@@ -9,7 +9,6 @@
   </section>
   <section class="button-bar">
   </section>
-  <mode-switcher darkMode="darkMode"/>
 </template>
 
 <script>
@@ -63,7 +62,5 @@ export default {
 p{
 font-style: italic;
 }
-
-
 
 </style>

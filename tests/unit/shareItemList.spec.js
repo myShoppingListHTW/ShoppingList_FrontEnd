@@ -4,6 +4,11 @@
  * This suite of tests focuses on the functionality related to copying the shopping list to the clipboard
  * and displaying alerts to the user. It includes tests for successful copying and error handling scenarios.
  */
+import { shallowMount } from '@vue/test-utils';
+import ShareItemList from '@/components/ShareItemList.vue'; // Update with your actual path
+import { describe, it, expect, vi } from 'vitest';
+
+
 describe('ShareItemList.vue', () => {
     /**
      * Test case: Copies empty items to clipboard and shows alert.
@@ -29,14 +34,16 @@ describe('ShareItemList.vue', () => {
             }
         });
 
+        // Trigger the method
         await wrapper.vm.shareShoppingList();
 
+        // Check if clipboard.writeText was called with correct text
         const expectedText = 'Item 1'; // Updated expected text
         expect(clipboardSpy).toHaveBeenCalledWith(expectedText);
 
-        expect(window.alert).toHaveBeenCalledWith('Shopping list copied to clipboard!');
+        // Check if alert was called
+        expect(window.alert).toHaveBeenCalledWith('shopping list copied to clipboard!');
     });
-
     /**
      * Test case: Shows error alert if clipboard API fails.
      *
@@ -48,6 +55,7 @@ describe('ShareItemList.vue', () => {
         const clipboardSpy = vi.fn().mockRejectedValue(new Error('Clipboard error'));
         global.navigator.clipboard = { writeText: clipboardSpy };
 
+        // Mock window.alert
         window.alert = vi.fn();
 
         const items = [{ name: 'Item 1', empty: true }];
@@ -58,8 +66,10 @@ describe('ShareItemList.vue', () => {
             }
         });
 
+        // Trigger the method
         await wrapper.vm.shareShoppingList();
 
+        // Check if error alert was called
         expect(window.alert).toHaveBeenCalledWith('Failed to copy shopping list to clipboard.');
     });
 });
