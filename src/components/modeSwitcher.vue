@@ -1,5 +1,6 @@
 <template>
   <label class="dark-mode-switch">
+    <span class="toggle-text">Dark Mode</span>
     <input type="checkbox" :checked="darkMode" @change="$emit('toggleDarkMode')" />
     <span class="slider"></span>
   </label>
@@ -55,5 +56,14 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+}
+
+.toggle-text {
+  position: relative;
+  top: -100%;
+
+  font-size: 12px;
+  line-height: 34px;
+  color: #fff; /* Set your desired color for the switch text */
 }
 </style>
