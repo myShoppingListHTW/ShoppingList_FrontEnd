@@ -9,14 +9,16 @@
   </section>
   <section class="button-bar">
   </section>
+  <mode-switcher darkMode="darkMode"/>
 </template>
 
 <script>
 import shoppingList from '@/components/ShoppingList.vue'
 import { RouterLink } from 'vue-router'
+import darkMode from "@/components/modeSwitcher.vue";
 
 export default {
-  components: { RouterLink },
+  components: {ModeSwitcher, RouterLink },
   computed: {
     shoppingList() {
       return shoppingList
@@ -61,6 +63,7 @@ export default {
 p{
 font-style: italic;
 }
+
 
 
 </style>

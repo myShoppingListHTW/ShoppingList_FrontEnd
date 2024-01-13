@@ -12,9 +12,7 @@
 <script setup lang="ts">
 
 import ShoppingList from "../components/ShoppingList.vue";
-import addItemButton from "../components/addItemButton.vue";
 import { ref } from 'vue';
-
 interface ShoppingItem {
 
   name: string;
@@ -22,10 +20,9 @@ interface ShoppingItem {
   category: string;
   id: number
 }
-const shoppingItems = ref<ShoppingItem[]>([]);
-const addItem = (item: ShoppingItem) => {
-  shoppingItems.value.push(item);
-};
+const shoppingItems = ref<ShoppingItem[]>([])
+
+
 </script>
 
 <style scoped>
@@ -42,13 +39,6 @@ const addItem = (item: ShoppingItem) => {
     .shopping-list-container {
         max-width: 90%; /* Adjust width for smaller screens */
     }
-}
-.sticky-header {
-  position: sticky;
-  top: 0;
-  background-color: white; /* or any color that fits your design */
-  z-index: 100;
-  padding: 10px 0; /* Optional: for some spacing */
 }
 
 
