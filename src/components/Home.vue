@@ -1,7 +1,6 @@
 <template>
   <section class="home-view">
     <section  v-if="!authenticated" class="shopping-list-section">
-      <h1>Welcome to MyHTWShoppingList</h1>
       <p>
         The Shopping List App is a powerful and user-friendly checklist
         application designed to streamline
