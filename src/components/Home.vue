@@ -14,10 +14,9 @@
 <script>
 import shoppingList from '@/components/ShoppingList.vue'
 import { RouterLink } from 'vue-router'
-import darkMode from "@/components/modeSwitcher.vue";
 
 export default {
-  components: {ModeSwitcher, RouterLink },
+  components: {RouterLink },
   computed: {
     shoppingList() {
       return shoppingList

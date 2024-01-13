@@ -12,6 +12,7 @@
 <script setup lang="ts">
 
 import ShoppingList from "../components/ShoppingList.vue";
+import addItemButton from "../components/addItemButton.vue";
 import { ref } from 'vue';
 interface ShoppingItem {
 
