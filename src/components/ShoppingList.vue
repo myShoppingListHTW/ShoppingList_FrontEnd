@@ -130,6 +130,7 @@ export default {
       } catch (error) {
         API_BASE_URL = herokuEndpoint;
       }
+
     },
 
 
