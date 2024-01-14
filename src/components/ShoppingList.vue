@@ -101,9 +101,8 @@ export default {
       newItem: {
         name: '',
         empty: true,
-        category: '',
+        category: 'OTHER',
         owner: 'everybody',
-        darkmode: false,
       },
       editedItem: null,
       showEditForm: false,
@@ -115,7 +114,7 @@ export default {
   mounted() {
     useAuth().getUser().then((user) => {
       email.value = user.email
-      this.fetchItems(email.value)
+      this.fetchItems(email.value);
     })
   },
   methods: {
@@ -231,7 +230,10 @@ export default {
         .catch(error => console.error('Error updating item status:', error));
     },
     saveItem(newItem){
-      newItem.owner = email.value;
+          if (newItem.name.length < 2) {
+            return;
+          }
+            newItem.owner = email.value;
       axios.post(API_BASE_URL, newItem)
         .then(response => {
           this.items.push(response.data);
@@ -241,14 +243,19 @@ export default {
           this.fetchItems(email.value);
         })
         .catch(error => console.error('Error adding new item:', error));
+      this.cancelAddingItem();
+
     },
     cancelAddingItem() {
-      this.newItem = '';
+      this.newItem = { name: '', empty: true, category: 'OTHER', owner: 'everybody' };
       this.showAddItemForm = false;
     },
-  addItem() {
+    addItem() {
     this.showAddItemForm = true;
   },
+    badItemName() {
+      this.$emit('badItemName', this.badItemName);
+    },
   },
 };
 </script>

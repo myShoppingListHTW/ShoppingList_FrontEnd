@@ -46,7 +46,6 @@ async function isAuthenticated() {
 watchEffect(() => {
   document.body.classList.toggle('dark-mode', darkMode.value)
   console.log('Dark Mode Toggled:', darkMode.value)
-
 })
 
 onMounted(async () => {

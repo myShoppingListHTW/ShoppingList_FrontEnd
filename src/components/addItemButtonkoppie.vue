@@ -3,21 +3,27 @@
   <div class="edit-popup">
     <div class="edit-form">
       <h3>Add Item</h3>
+      <div>
+        <label for="name">Name:</label>
+        <input
+          id="name"
+          v-model="name"
+          class="invalid"
+          @input="validateName"
+        />
+        <span ref="nameError" id="nameError" class="error">
+      Invalid input
+    </span>
+      </div>
 
-      <input type="text" id="itemName" v-model="newItem.name"
-             required placeholder="Item Name" maxlength="20" minlength="2"
-             autocomplete="on" @input="clearNameError"/>
-      <span ref="nameError" id="nameError" class="error" v-if="nameErrorVisible">
-        {{ nameError }}
 
-      </span>
 
       <select v-model="newItem.category">
         <option v-for="category in categories" :key="category"
                 :value="category">{{ category }}</option>
       </select>
       <div class="button-group">
-        <button class="create-item-button" @click="saveNewItem" @bad-Item-Name="displayBadItemName">Save</button>
+        <button class="create-item-button" @click="saveNewItem">Save</button>
         <button @click="cancelAddingItem">Cancel</button>
       </div>
     </div>
@@ -25,46 +31,55 @@
 </template>
 
 <script>
-const badItemName = "name must be between 2 and 20 characters long";
+
 export default {
-  data() {
-    return {
-      nameError: '',
-      nameErrorVisible: false,
-    };
-  },
-  props: {
+    data() {
+      return {
+        name: "",
+        isValid: true,
+      };
+    },
+
+    props: {
     newItem: Object,
     categories: Array
   },
   methods: {
     saveNewItem() {
-      // Validierung für den Artikelnamen hier hinzufügen
-      if (this.newItem.name.length < 2 || this.newItem.name.length > 20) {
-        this.displayBadItemName();
-      } else {
-        this.clearNameError();
-        this.$emit('save-item', this.newItem);
-      }
+      this.$emit('save-item', this.newItem);
     },
     cancelAddingItem() {
       this.$emit('cancel-adding-item');
     },
-    displayBadItemName() {
-      this.nameError = badItemName;
-      this.nameErrorVisible = true;
-    },
-    clearNameError() {
-      this.nameError = '';
-      this.nameErrorVisible = false;
+    validateName() {
+      // Your validation logic
+      if (this.name.length < 3) {
+        this.isValid = false;
+        this.$refs.nameError.classList.add("visible");
+      } else {
+        this.isValid = true;
+        this.$refs.nameError.classList.remove("visible");
+      }
     },
   },
 };
+
+
 </script>
 
-
-
 <style scoped>
+#error {
+  display: none;
+  font-size: 0.8em;
+}
+
+#error.visible {
+  display: block;
+}
+
+input.invalid {
+  border-color: red;
+}
 .edit-popup {
   position: fixed;
   top: 50%;
@@ -84,7 +99,7 @@ export default {
   align-items: stretch;
   padding: 20px;
   border-radius: 5px;
-  color: #fff;
+  color: #fff; /* Set text color to white */
 }
 
 input, select {
@@ -108,12 +123,18 @@ button {
   border-radius: 5px;
   flex: 1;
   margin: 0 5px;
-}
 
-.error {
-  color: #ff3737;
+}
+#nameError {
+  display: none;
   font-size: 0.8em;
-  position: relative;
 }
 
+#nameError.visible {
+  display: block;
+}
+
+input.invalid {
+  border-color: red;
+}
 </style>

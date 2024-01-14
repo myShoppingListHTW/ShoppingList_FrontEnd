@@ -12,7 +12,7 @@
       <li v-if="authenticated">
         <router-link to="/ShoppingList" class="nav-link px-2 link-primary">My List</router-link>
       </li>
-      <h5 v-if="!authenticated" class="col-lg-10 fst-4">Welcome to My HTW Shopping</h5>
+      <h4 v-if="!authenticated" class="col-lg-10 fst-4">Welcome to My HTW Shopping</h4>
       <li v-if="authenticated">
         <router-link to="/profile" class="nav-link px-2 link-primary">Profile</router-link>
       </li>
