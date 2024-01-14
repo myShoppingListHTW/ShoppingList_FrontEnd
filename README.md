@@ -7,9 +7,8 @@ The Shopping List App is a powerful and user-friendly checklist application desi
 It simplifies the process of creating, managing, and sharing your shopping lists.
 No more forgetting items or feeling overwhelmed at the store – our app has got you covered!
 
-## Very Important:V
-##### We regret to inform you that due to unforeseen technical challenges, we were unable to configure the self-registration 
-feature in our app as originally planned. As a result, we have taken the initiative to add your official university email addresses to our Okta system.
+## Very Important:
+##### We regret to inform you that due to unforeseen technical challenges, we were unable to configure the self-registration feature in our app as originally planned. As a result, we have taken the initiative to add your official university email addresses to our Okta system.
 
 ##### Here's what you need to know:
 
@@ -37,9 +36,9 @@ Thank you for your understanding, and we appreciate your patience as we work to 
   * **Logout:** You can always choose to log out from your account for added security or to switch between accounts. Click on the "Logout" button to sign out of your current session.
 
 **Contributors:**
-* [Rita Chibla   588480](https://github.com/RitaChiblaq) -> [email](rita.chiblaq@gmail.com)
+* [Rita Chibla   588480](https://github.com/RitaChiblaq) -> Email: rita.chiblaq@gmail.com
    
-* [Ghazi Nakkash 587550](https://github.com/Ghazi-nk) -> [email](ghazi.nakkash.gn@gmail.com)
+* [Ghazi Nakkash 587550](https://github.com/Ghazi-nk) -> Email: ghazi.nakkash.gn@gmail.com
   
 
 #### This template should help get you started developing with Vue 3 in Vite.
