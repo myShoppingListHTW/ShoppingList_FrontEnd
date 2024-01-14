@@ -79,7 +79,7 @@ import ModeSwitcher from "@/components/modeSwitcher.vue";
 const email = ref('')
 const $auth = useAuth()
 const owner = email.value
-let API_BASE_URL = ref('')
+let API_BASE_URL = 'https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article/';
 const localEndpoint = 'http://localhost:8080/api/v1/article/';
 const herokuEndpoint = 'https://myshoppinglist-5c77ab8495cc.herokuapp.com/api/v1/article/';
 
@@ -135,7 +135,7 @@ export default {
 
 
     async fetchItems(owner = 'everybody') {
-      await this.getUrl();
+      //await this.getUrl();
       try {
         const endpoint = API_BASE_URL  + `?owner=${email.value}`;
 
