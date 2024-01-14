@@ -28,6 +28,9 @@ const oktaSignIn = new OktaSignIn({
     scopes: ['openid', 'profile', 'email'],
   },
   useClassicEngine: true,
+  features: {
+    registration: true,
+  },
 });
 
 
@@ -58,5 +61,6 @@ library.add(faUserSecret);
 app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.mount('#app');
+
 
 export { oktaAuth, oktaSignIn };

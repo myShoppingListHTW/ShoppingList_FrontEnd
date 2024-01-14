@@ -9,9 +9,7 @@
              autocomplete="on" @input="clearNameError"/>
       <span ref="nameError" id="nameError" class="error" v-if="nameErrorVisible">
         {{ nameError }}
-
       </span>
-
       <select v-model="newItem.category">
         <option v-for="category in categories" :key="category"
                 :value="category">{{ category }}</option>
@@ -39,7 +37,6 @@ export default {
   },
   methods: {
     saveNewItem() {
-      // Validierung für den Artikelnamen hier hinzufügen
       if (this.newItem.name.length < 2 || this.newItem.name.length > 20) {
         this.displayBadItemName();
       } else {

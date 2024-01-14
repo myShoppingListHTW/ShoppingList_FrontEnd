@@ -5,7 +5,12 @@
       <h3>Edit Item</h3>
       <input type="text" id="itemName" v-model="editedItem.name"
              required placeholder="Item Name" maxlength="20" minlength="2"
-             autocomplete="on"/>
+             autocomplete="on"
+            @input="clearNameError"
+      />
+      <span ref="nameError" id="nameError" class="error" v-if="nameErrorVisible">
+        {{ nameError }}
+      </span>
       <select v-model="editedItem.category">
         <option v-for="category in categories" :key="category"
                 :value="category">{{ category }}</option>
@@ -19,17 +24,37 @@
 </template>
 
 <script>
+const badItemName = "name must be between 2 and 20 characters long";
 export default {
+  data() {
+    return {
+      nameError: '',
+      nameErrorVisible: false,
+    };
+  },
   props: {
     editedItem: Object,
     categories: Array
   },
   methods: {
     saveEdits() {
-      this.$emit('save-edits', this.editedItem);
+      if (this.editedItem.name.length < 2 || this.editedItem.name.length > 20) {
+        this.displayBadItemName();
+      } else {
+        this.clearNameError();
+        this.$emit('save-edits', this.editedItem);
+      };
     },
     cancelEdit() {
       this.$emit('cancel-edit');
+    },
+    displayBadItemName() {
+      this.nameError = badItemName;
+      this.nameErrorVisible = true;
+    },
+    clearNameError() {
+      this.nameError = '';
+      this.nameErrorVisible = false;
     },
   },
 };
@@ -81,4 +106,11 @@ button {
   margin: 0 5px;
 
 }
+
+.error {
+  color: #ff3737;
+  font-size: 0.8em;
+  position: relative;
+}
+
 </style>
