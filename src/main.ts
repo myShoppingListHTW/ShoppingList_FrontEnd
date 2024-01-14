@@ -27,10 +27,7 @@ const oktaSignIn = new OktaSignIn({
     display: 'page',
     scopes: ['openid', 'profile', 'email'],
   },
-  useClassicEngine: true,
-  features: {
-    registration: true,
-  },
+  useClassicEngine: true
 });
 
 
