@@ -188,6 +188,9 @@ export default {
       this.showEditForm = true;
     },
     saveEdits(updatedItem) {
+      if (updatedItem.name.length < 2) {
+        return;
+      }
       const index = this.items.findIndex(item => item.id === updatedItem.id);
       if (index !== -1) {
         this.items.splice(index, 1, updatedItem);
@@ -253,9 +256,6 @@ export default {
     addItem() {
     this.showAddItemForm = true;
   },
-    badItemName() {
-      this.$emit('badItemName', this.badItemName);
-    },
   },
 };
 </script>
