@@ -119,14 +119,18 @@ export default {
   },
   methods: {
 
-    async getUrl()  {
+    async getUrl() {
       try {
-      const response = await fetch(localEndpoint);
-      API_BASE_URL = localEndpoint;
-    } catch (error) {
-      API_BASE_URL = herokuEndpoint;
-    }
-  },
+        const response = await fetch(localEndpoint, { method: 'HEAD' });
+        if (response.ok) {
+          API_BASE_URL = localEndpoint;
+        } else {
+          API_BASE_URL = herokuEndpoint;
+        }
+      } catch (error) {
+        API_BASE_URL = herokuEndpoint;
+      }
+    },
 
 
     async fetchItems(owner = 'everybody') {
