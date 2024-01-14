@@ -1,4 +1,4 @@
-
+[![CI](https://github.com/myShoppingListHTW/ShoppingList_FrontEnd/actions/workflows/ci.yml/badge.svg)](https://github.com/myShoppingListHTW/ShoppingList_FrontEnd/actions/workflows/ci.yml)
 # MyHTWShoppingList
 
 ## [Heroku APP](https://myshoppinglistfrontend-f9889051a5f1.herokuapp.com)
